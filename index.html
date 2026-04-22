@@ -19,67 +19,95 @@
 
     <div class="container mx-auto px-4 py-8 relative z-10 max-w-2xl">
         
-        <header class="text-center mb-12">
+        <header class="text-center mb-8">
             <div class="flex justify-center mb-4">
-                <img src="https://muzn-sa.vercel.app/logo.png" alt="لوجو مزن" id="mainLogo" class="h-24 w-auto object-contain">
+                <div class="w-20 h-20 bg-blue-500/20 rounded-full flex items-center justify-center border border-blue-400/30 shadow-lg shadow-blue-500/20">
+                    <span class="text-3xl">💧</span>
+                </div>
             </div>
             <h1 class="text-4xl font-extrabold text-blue-400">مُزن</h1>
             <p class="text-blue-200 opacity-80 mt-2">أثرٌ يروي بعطائكم</p>
         </header>
 
-        <main class="glass rounded-3xl p-8 shadow-2xl transition-all">
+        <main id="mainCard" class="glass rounded-3xl p-8 shadow-2xl transition-all border border-blue-400/10">
             
-            <div id="loading" class="py-10 text-center">
+            <div id="statsView" class="space-y-8 py-4">
+                <div class="text-center mb-6">
+                    <h2 class="text-xl font-bold text-white mb-2">منصة التقييمات الرسمية</h2>
+                    <p class="text-sm text-blue-200/60">كل تقييم هو قصة عطاء نتشاركها</p>
+                </div>
+                <div class="grid grid-cols-3 gap-4 text-center">
+                    <div class="p-3 bg-white/5 rounded-2xl border border-blue-400/10">
+                        <div class="text-2xl mb-1">⭐</div>
+                        <div class="text-lg font-bold">4.9</div>
+                        <div class="text-[10px] text-blue-200/50">متوسط التقييم</div>
+                    </div>
+                    <div class="p-3 bg-white/5 rounded-2xl border border-blue-400/10">
+                        <div class="text-2xl mb-1">📦</div>
+                        <div class="text-lg font-bold">+15k</div>
+                        <div class="text-[10px] text-blue-200/50">عبوة وُزعت</div>
+                    </div>
+                    <div class="p-3 bg-white/5 rounded-2xl border border-blue-400/10">
+                        <div class="text-2xl mb-1">🕌</div>
+                        <div class="text-lg font-bold">+120</div>
+                        <div class="text-[10px] text-blue-200/50">مسجد نُفذ</div>
+                    </div>
+                </div>
+                <div class="bg-blue-600/20 p-4 rounded-2xl border border-blue-400/20 text-center">
+                    <p class="text-sm text-blue-200">لطفاً استخدم الرابط المرسل إليك عبر الواتساب للوصول إلى طلبك وتوثيقه.</p>
+                </div>
+            </div>
+
+            <div id="loading" class="hidden py-10 text-center">
                 <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-400 mx-auto mb-4"></div>
-                <p class="text-blue-200">جاري التحقق...</p>
+                <p class="text-blue-200">جاري جلب بيانات الطلب...</p>
             </div>
 
             <div id="driverForm" class="hidden space-y-6">
-                <div class="text-center mb-6">
-                    <span class="bg-blue-500/20 text-blue-400 px-4 py-1 rounded-full text-xs font-bold">🚛 توثيق التوصيل</span>
-                    <h2 class="text-2xl font-bold mt-4">توثيق ميداني</h2>
+                <div class="text-center">
+                    <span class="bg-blue-500/20 text-blue-400 px-4 py-1 rounded-full text-xs font-bold">🚛 توثيق الميدان</span>
+                    <h2 class="text-2xl font-bold mt-4">توثيق التوصيل</h2>
                 </div>
-
                 <div class="space-y-4">
                     <div class="text-right">
-                        <label class="block text-blue-200 text-sm mb-2 mr-1 text-right">اسم المورد / جهة التوريد</label>
-                        <input type="text" id="driverNameInput" placeholder="اكتب اسم المورد هنا..." class="w-full bg-white/5 border border-blue-400/20 rounded-2xl px-5 py-4 text-white text-right focus:border-blue-400 outline-none">
+                        <label class="block text-blue-200 text-xs mb-2 mr-1">اسم المورد / جهة التوريد</label>
+                        <input type="text" id="driverNameInput" placeholder="اكتب اسم المورد هنا..." class="w-full bg-white/5 border border-blue-400/20 rounded-2xl px-5 py-4 text-white text-right focus:border-blue-400 outline-none transition-all">
                     </div>
                     <div class="text-right">
-                        <label class="block text-blue-200 text-sm mb-2 mr-1 text-right">ملاحظات</label>
-                        <textarea id="driverNotes" rows="2" class="w-full bg-white/5 border border-blue-400/20 rounded-2xl px-5 py-4 text-white text-right outline-none"></textarea>
+                        <label class="block text-blue-200 text-xs mb-2 mr-1">ملاحظات إضافية</label>
+                        <textarea id="driverNotes" rows="2" class="w-full bg-white/5 border border-blue-400/20 rounded-2xl px-5 py-4 text-white text-right outline-none focus:border-blue-400 transition-all"></textarea>
                     </div>
-                    <div class="relative group">
-                        <input type="file" id="photoInput" accept="image/*" class="hidden">
-                        <label for="photoInput" class="flex flex-col items-center justify-center w-full h-44 border-2 border-dashed border-blue-400/30 rounded-2xl cursor-pointer hover:bg-blue-400/5 transition-all">
-                            <span class="text-3xl mb-2">📸</span>
-                            <p class="text-blue-200 text-sm">ارفع صورة التوثيق</p>
-                        </label>
-                    </div>
-                    <div id="imagePreview" class="hidden mt-4 rounded-2xl overflow-hidden border border-blue-500/20 shadow-xl"></div>
+                    <input type="file" id="photoInput" accept="image/*" class="hidden">
+                    <label for="photoInput" class="flex flex-col items-center justify-center w-full h-40 border-2 border-dashed border-blue-400/30 rounded-2xl cursor-pointer hover:bg-blue-400/5 transition-all">
+                        <span class="text-3xl mb-2">📸</span>
+                        <p class="text-blue-200 text-sm">ارفع صورة التوثيق</p>
+                    </label>
+                    <div id="imagePreview" class="hidden mt-4 rounded-2xl overflow-hidden border border-blue-500/20"></div>
                 </div>
-                <button onclick="submitDelivery()" id="submitBtn" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-4 rounded-2xl shadow-lg transition-all mt-6">إرسال التوثيق</button>
+                <button onclick="submitDelivery()" id="submitBtn" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-4 rounded-2xl shadow-lg transition-all mt-4">إرسال التوثيق للموقع</button>
             </div>
 
             <div id="customerForm" class="hidden space-y-6 text-center">
                 <span class="bg-yellow-500/20 text-yellow-400 px-4 py-1 rounded-full text-xs font-bold">⭐ تقييم العميل</span>
-                <h2 class="text-2xl font-bold mt-4">رأيك يهمنا</h2>
-                <div class="flex justify-center gap-2 py-4" id="starRating">
-                    </div>
-                <textarea id="customerComment" placeholder="اكتب ملاحظاتك هنا..." class="w-full bg-white/5 border border-blue-400/20 rounded-2xl px-5 py-4 text-white text-right outline-none"></textarea>
-                <button onclick="submitReview()" id="reviewBtn" class="w-full bg-yellow-600 hover:bg-yellow-500 text-white font-bold py-4 rounded-2xl shadow-lg transition-all mt-4 text-right px-4">إرسال التقييم</button>
+                <h2 class="text-2xl font-bold mt-4 italic">رأيك يروي عطاءنا</h2>
+                <div class="flex justify-center gap-2 py-4" id="starRating"></div>
+                <textarea id="customerComment" placeholder="يسعدنا سماع ملاحظاتك..." class="w-full bg-white/5 border border-blue-400/20 rounded-2xl px-5 py-4 text-white text-right outline-none focus:border-blue-400 transition-all"></textarea>
+                <button onclick="submitReview()" id="reviewBtn" class="w-full bg-yellow-600 hover:bg-yellow-500 text-white font-bold py-4 rounded-2xl shadow-lg transition-all mt-4">نشر التقييم</button>
             </div>
         </main>
 
         <section class="mt-12">
-            <h3 class="text-xl font-bold text-center text-blue-400 mb-6">آخر التوثيقات الميدانية</h3>
+            <h3 class="text-xl font-bold text-center text-blue-400 mb-8 flex items-center justify-center gap-3">
+                <span class="w-8 h-[1px] bg-blue-400/30"></span>
+                آخر التوثيقات الميدانية
+                <span class="w-8 h-[1px] bg-blue-400/30"></span>
+            </h3>
             <div id="gallery" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
         </section>
 
     </div>
 
     <script>
-        // الرابط الخاص بك
         const GAS_URL = 'https://script.google.com/macros/s/AKfycbwR8Dr7kWrerTRIOSXekvRcMTZV9PGDmrkqLD_TjKB8CNVGB-IFGTal7eNJm2VB6isO/exec';
         const orderId = new URLSearchParams(window.location.search).get('id');
         let selectedStars = 0;
@@ -92,13 +120,13 @@
 
         window.onload = () => {
             initDrops();
-            if (!orderId) {
-                document.getElementById('loading').innerHTML = "⚠️ لا يوجد رقم طلب في الرابط";
-                return;
-            }
-            checkOrder();
             loadGallery();
-            setupStars();
+            if (orderId) {
+                document.getElementById('statsView').classList.add('hidden');
+                document.getElementById('loading').classList.remove('hidden');
+                checkOrder();
+                setupStars();
+            }
         };
 
         async function checkOrder() {
@@ -112,20 +140,19 @@
                     document.getElementById('customerForm').classList.remove('hidden');
                 }
             } catch (e) {
-                document.getElementById('loading').innerHTML = "حدث خطأ في الاتصال";
+                document.getElementById('loading').innerHTML = "خطأ في الاتصال بالسيرفر";
             }
         }
 
         async function submitDelivery() {
             const fileInput = document.getElementById('photoInput');
             const supplier = document.getElementById('driverNameInput').value;
-            const notes = document.getElementById('driverNotes').value;
+            if (!supplier) { alert('لطفاً أدخل اسم المورد'); return; }
+            if (fileInput.files.length === 0) { alert('لطفاً ارفع صورة التوثيق'); return; }
+
             const btn = document.getElementById('submitBtn');
-
-            if (!supplier) { alert('أدخل اسم المورد'); return; }
-            if (fileInput.files.length === 0) { alert('ارفع الصورة'); return; }
-
             btn.disabled = true; btn.innerText = 'جاري الرفع...';
+
             const reader = new FileReader();
             reader.onload = async (e) => {
                 const fd = new FormData();
@@ -133,45 +160,52 @@
                 fd.append('orderId', orderId);
                 fd.append('image', e.target.result.split(',')[1]);
                 fd.append('driverName', supplier);
-                fd.append('notes', notes);
+                fd.append('notes', document.getElementById('driverNotes').value);
                 await fetch(GAS_URL, { method: 'POST', body: fd });
-                alert('تم التوثيق بنجاح'); location.reload();
+                alert('تم التوثيق بنجاح'); location.href = window.location.pathname;
             };
             reader.readAsDataURL(fileInput.files[0]);
         }
 
         async function submitReview() {
-            if (selectedStars === 0) { alert('لطفاً اختر التقييم بالنجوم'); return; }
+            if (selectedStars === 0) { alert('لطفاً اختر عدد النجوم'); return; }
             const btn = document.getElementById('reviewBtn');
-            btn.disabled = true; btn.innerText = 'جاري الإرسال...';
+            btn.disabled = true; btn.innerText = 'جاري النشر...';
             const fd = new FormData();
             fd.append('action', 'submitReview');
             fd.append('orderId', orderId);
             fd.append('rating', selectedStars);
             fd.append('comment', document.getElementById('customerComment').value);
             await fetch(GAS_URL, { method: 'POST', body: fd });
-            alert('شكراً لتقييمك'); location.reload();
+            alert('شكراً لتقييمك'); location.href = window.location.pathname;
         }
 
         async function loadGallery() {
-            const res = await fetch(`${GAS_URL}?action=getResults`);
-            const items = await res.json();
-            document.getElementById('gallery').innerHTML = items.map(item => `
-                <div class="glass rounded-2xl overflow-hidden border border-blue-500/10">
-                    <img src="${getDirectLink(item.imageUrl)}" class="w-full h-48 object-cover">
-                    <div class="p-4 text-right text-sm">
-                        <div class="flex justify-between mb-2"><span class="text-blue-400">#${item.orderId}</span><span class="font-bold">${item.name}</span></div>
-                        <p class="opacity-70">${item.comment || ''}</p>
+            try {
+                const res = await fetch(`${GAS_URL}?action=getResults`);
+                const items = await res.json();
+                document.getElementById('gallery').innerHTML = items.map(item => `
+                    <div class="glass rounded-2xl overflow-hidden border border-blue-500/10 hover:border-blue-400/30 transition-all group">
+                        <div class="relative h-48 overflow-hidden">
+                             <img src="${getDirectLink(item.imageUrl)}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" onerror="this.src='https://placehold.co/400x300/050b1a/blue?text=Muzn'">
+                        </div>
+                        <div class="p-4 text-right">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-blue-400 text-xs font-bold font-mono">#${item.orderId}</span>
+                                <span class="text-white text-sm font-bold">${item.name}</span>
+                            </div>
+                            <p class="text-blue-200/60 text-xs leading-relaxed line-clamp-2">${item.comment || 'تم التوثيق بنجاح'}</p>
+                        </div>
                     </div>
-                </div>
-            `).join('');
+                `).join('');
+            } catch (e) { console.log("Gallery Error"); }
         }
 
         function setupStars() {
             const container = document.getElementById('starRating');
             for(let i=1; i<=5; i++) {
                 const s = document.createElement('span');
-                s.innerHTML = '☆'; s.className = 'text-3xl cursor-pointer text-yellow-400';
+                s.innerHTML = '☆'; s.className = 'text-4xl cursor-pointer text-yellow-400 hover:scale-125 transition-transform';
                 s.onclick = () => {
                     selectedStars = i;
                     Array.from(container.children).forEach((star, idx) => {
