@@ -7,7 +7,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
 <style>
 /* ============================================================
-   MUZN – CSS Variables (extracted from logo palette)
+   MUZN v2 — CSS Variables
    ============================================================ */
 :root {
   --ink:        #04102a;
@@ -24,36 +24,28 @@
   --glass-b:    rgba(255,255,255,.12);
   --success:    #00e87a;
   --warn:       #ffc44d;
+  --danger:     #ff5252;
 }
-
-/* ── Reset ── */
 *{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
 body{
   font-family:'Tajawal',sans-serif;
-  background:var(--ink);
-  color:var(--white);
-  overflow-x:hidden;
-  direction:rtl;
-  min-height:100vh;
+  background:var(--ink);color:var(--white);
+  overflow-x:hidden;direction:rtl;min-height:100vh;
 }
-
-/* ── Background canvas ── */
 .bg{
   position:fixed;inset:0;z-index:0;
   background:
-    radial-gradient(ellipse at 10% 20%, rgba(26,63,168,.38) 0%, transparent 52%),
-    radial-gradient(ellipse at 90% 80%, rgba(0,184,240,.11) 0%, transparent 48%),
+    radial-gradient(ellipse at 10% 20%,rgba(26,63,168,.38) 0%,transparent 52%),
+    radial-gradient(ellipse at 90% 80%,rgba(0,184,240,.11) 0%,transparent 48%),
     var(--ink);
 }
 .bg::after{
   content:'';position:absolute;inset:0;
-  background:radial-gradient(circle at 50% 5%, rgba(30,86,208,.07) 0%, transparent 55%);
+  background:radial-gradient(circle at 50% 5%,rgba(30,86,208,.07) 0%,transparent 55%);
   animation:atmo 9s ease-in-out infinite alternate;
 }
 @keyframes atmo{from{opacity:.4}to{opacity:1}}
-
-/* Floating drops */
 .drops{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;}
 .drop{
   position:absolute;
@@ -67,13 +59,9 @@ body{
   10%{opacity:1}90%{opacity:.4}
   100%{transform:translateY(-10vh) scale(1.1);opacity:0}
 }
-
-/* ── Layout ── */
 .container{max-width:1080px;margin:0 auto;padding:0 20px;position:relative;z-index:1;}
 
-/* ============================================================
-   HEADER
-   ============================================================ */
+/* ── HEADER ── */
 header{
   position:sticky;top:0;z-index:200;
   backdrop-filter:blur(22px);
@@ -81,15 +69,9 @@ header{
   border-bottom:1px solid rgba(58,140,232,.14);
   padding:11px 0;
 }
-.hdr{
-  display:flex;align-items:center;justify-content:space-between;
-  max-width:1080px;margin:0 auto;padding:0 20px;
-}
+.hdr{display:flex;align-items:center;justify-content:space-between;max-width:1080px;margin:0 auto;padding:0 20px;}
 .logo-wrap{display:flex;align-items:center;gap:13px;}
-.logo-img{
-  width:46px;height:58px;object-fit:contain;
-  filter:drop-shadow(0 2px 14px rgba(0,184,240,.4));
-}
+.logo-img{width:46px;height:58px;object-fit:contain;filter:drop-shadow(0 2px 14px rgba(0,184,240,.4));}
 .logo-txt .name{
   font-size:23px;font-weight:900;letter-spacing:-.4px;
   background:linear-gradient(135deg,#fff 20%,var(--aqua-lt));
@@ -105,34 +87,19 @@ header{
   width:7px;height:7px;background:var(--success);border-radius:50%;
   animation:pulse 1.5s ease-in-out infinite;
 }
-@keyframes pulse{
-  0%,100%{box-shadow:0 0 0 0 rgba(0,232,122,.6)}
-  50%{box-shadow:0 0 0 6px rgba(0,232,122,0)}
-}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(0,232,122,.6)}50%{box-shadow:0 0 0 6px rgba(0,232,122,0)}}
 
-/* ============================================================
-   HERO + STATS
-   ============================================================ */
+/* ── HERO ── */
 .hero{padding:65px 0 50px;text-align:center;position:relative;z-index:1;}
 .eyebrow{
   display:inline-flex;align-items:center;gap:7px;
   background:rgba(58,140,232,.1);border:1px solid rgba(58,140,232,.2);
   border-radius:50px;padding:5px 17px;font-size:12.5px;
-  color:var(--sky-lt);margin-bottom:24px;
-  animation:fadeUp .8s ease both;
+  color:var(--sky-lt);margin-bottom:24px;animation:fadeUp .8s ease both;
 }
-.hero h1{
-  font-size:clamp(32px,6vw,62px);font-weight:900;line-height:1.15;margin-bottom:16px;
-  animation:fadeUp .8s ease .1s both;
-}
-.hero h1 span{
-  background:linear-gradient(135deg,var(--sky) 0%,var(--aqua-lt) 100%);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;display:block;
-}
-.hero p{
-  font-size:16.5px;color:rgba(255,255,255,.6);max-width:480px;
-  margin:0 auto 32px;line-height:1.75;animation:fadeUp .8s ease .2s both;
-}
+.hero h1{font-size:clamp(32px,6vw,62px);font-weight:900;line-height:1.15;margin-bottom:16px;animation:fadeUp .8s ease .1s both;}
+.hero h1 span{background:linear-gradient(135deg,var(--sky) 0%,var(--aqua-lt) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;display:block;}
+.hero p{font-size:16.5px;color:rgba(255,255,255,.6);max-width:480px;margin:0 auto 32px;line-height:1.75;animation:fadeUp .8s ease .2s both;}
 .cta{
   display:inline-flex;align-items:center;gap:9px;
   background:linear-gradient(135deg,var(--royal-mid),var(--royal-hi));
@@ -144,9 +111,10 @@ header{
 }
 .cta:hover{transform:translateY(-2px);box-shadow:0 12px 34px rgba(30,86,208,.6);}
 
-/* Stats grid */
+/* ── STATS (4 cards) ── */
 .stats{padding:0 0 60px;position:relative;z-index:1;}
-.sgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;}
+/* FIX #4: 4 columns for the new "عبوات" stat */
+.sgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;}
 .scard{
   background:var(--glass);border:1px solid var(--glass-b);
   border-radius:20px;padding:28px 16px;text-align:center;
@@ -160,21 +128,19 @@ header{
 .scard:hover{transform:translateY(-3px);border-color:rgba(58,140,232,.35);}
 .scard .ico{font-size:26px;display:block;margin-bottom:9px;}
 .scard .num{
-  font-size:42px;font-weight:900;
+  font-size:38px;font-weight:900;
   background:linear-gradient(135deg,#fff,var(--aqua-lt));
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;
   line-height:1;margin-bottom:4px;
 }
-.scard .lbl{font-size:13px;color:rgba(255,255,255,.48);font-weight:500;}
+.scard .lbl{font-size:12px;color:rgba(255,255,255,.48);font-weight:500;}
 
-/* Divider */
 .div{height:1px;background:linear-gradient(90deg,transparent,rgba(58,140,232,.17),transparent);margin:0 36px;position:relative;z-index:1;}
 
 /* Section header */
 .sh{text-align:center;margin-bottom:38px;}
 .sh .tag{
-  display:inline-block;
-  background:rgba(58,140,232,.11);border:1px solid rgba(58,140,232,.23);
+  display:inline-block;background:rgba(58,140,232,.11);border:1px solid rgba(58,140,232,.23);
   border-radius:50px;padding:4px 14px;font-size:12px;color:var(--sky);margin-bottom:11px;font-weight:600;
 }
 .sh h2{font-size:clamp(20px,4vw,34px);font-weight:800;margin-bottom:9px;}
@@ -185,15 +151,12 @@ header{
 .fi{opacity:0;transform:translateY(26px);transition:opacity .7s,transform .7s;}
 .fi.vis{opacity:1;transform:translateY(0);}
 
-/* ============================================================
-   MOSQUE CARDS
-   ============================================================ */
+/* ── MOSQUE CARDS ── */
 .mosques{padding:60px 0;position:relative;z-index:1;}
 .mgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;}
 .mcard{
   background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);
-  border-radius:18px;padding:22px 18px;
-  transition:all .3s;position:relative;overflow:hidden;
+  border-radius:18px;padding:22px 18px;transition:all .3s;position:relative;overflow:hidden;
 }
 .mcard::before{
   content:'';position:absolute;top:0;left:0;right:0;height:2px;
@@ -212,24 +175,14 @@ header{
 }
 .mcard .mboxes span{color:var(--aqua);font-weight:700;font-size:16px;}
 
-/* ============================================================
-   GALLERY
-   ============================================================ */
+/* ── GALLERY ── */
 .gallery{padding:60px 0;position:relative;z-index:1;}
-.ggrid{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  grid-template-rows:185px 185px;
-  gap:10px;
-}
+.ggrid{display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:185px 185px;gap:10px;}
 .gitem{border-radius:14px;overflow:hidden;position:relative;cursor:pointer;background:#0d2878;}
 .gitem:first-child{grid-column:span 2;grid-row:span 2;}
 .gitem img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s;}
 .gitem:hover img{transform:scale(1.05);}
-.gph{
-  width:100%;height:100%;display:flex;flex-direction:column;
-  align-items:center;justify-content:center;gap:8px;transition:transform .3s;
-}
+.gph{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;transition:transform .3s;}
 .gitem:hover .gph{transform:scale(1.04);}
 .gph1{background:linear-gradient(135deg,#0d2878,#1e56d0);}
 .gph2{background:linear-gradient(135deg,#0a2e60,#1a4fa0);}
@@ -238,50 +191,26 @@ header{
 .gph5{background:linear-gradient(135deg,#08182a,#0d3080);}
 .gph .gi{font-size:36px;opacity:.7;}
 .gph .gl{font-size:12px;color:rgba(255,255,255,.55);font-weight:500;}
-.gov{
-  position:absolute;inset:0;
-  background:rgba(4,16,42,.75);
-  display:flex;align-items:flex-end;padding:13px;
-  opacity:0;transition:opacity .3s;
-}
+.gov{position:absolute;inset:0;background:rgba(4,16,42,.75);display:flex;align-items:flex-end;padding:13px;opacity:0;transition:opacity .3s;}
 .gitem:hover .gov{opacity:1;}
 .gov span{font-size:12px;color:#fff;font-weight:600;}
 
-/* ============================================================
-   REVIEWS
-   ============================================================ */
+/* ── REVIEWS ── */
 .reviews{padding:60px 0;position:relative;z-index:1;}
 .rgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;}
-.rcard{
-  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);
-  border-radius:18px;padding:22px;transition:all .3s;
-}
+.rcard{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:18px;padding:22px;transition:all .3s;}
 .rcard:hover{border-color:rgba(58,140,232,.22);transform:translateY(-2px);}
 .rtop{display:flex;align-items:center;gap:12px;margin-bottom:13px;}
-.ava{
-  width:44px;height:44px;border-radius:50%;flex-shrink:0;
-  background:linear-gradient(135deg,var(--royal-mid),var(--aqua));
-  display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;
-}
+.ava{width:44px;height:44px;border-radius:50%;flex-shrink:0;background:linear-gradient(135deg,var(--royal-mid),var(--aqua));display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;}
 .rname{font-size:14px;font-weight:700;margin-bottom:2px;}
 .rentity{font-size:11.5px;color:var(--sky-lt);opacity:.8;}
 .rstars{display:flex;gap:2px;margin-bottom:10px;font-size:14px;}
 .rstars .f{color:var(--warn);}
-.rstars .e{color:rgba(255,255,255,.15);}
 .rtext{font-size:13.5px;line-height:1.75;color:rgba(255,255,255,.72);}
-.rmeta{
-  margin-top:12px;font-size:11px;color:rgba(255,255,255,.28);
-  display:flex;align-items:center;gap:5px;
-}
-.vbadge{
-  margin-right:auto;display:inline-flex;align-items:center;gap:3px;
-  background:rgba(0,232,122,.1);border:1px solid rgba(0,232,122,.2);
-  border-radius:20px;padding:2px 8px;font-size:10.5px;color:var(--success);
-}
+.rmeta{margin-top:12px;font-size:11px;color:rgba(255,255,255,.28);display:flex;align-items:center;gap:5px;}
+.vbadge{display:inline-flex;align-items:center;gap:4px;background:rgba(0,232,122,.1);border:1px solid rgba(0,232,122,.2);border-radius:20px;padding:2px 8px;font-size:10.5px;color:var(--success);margin-right:auto;}
 
-/* ============================================================
-   FORM SECTION
-   ============================================================ */
+/* ── FORM SECTION ── */
 .formsec{padding:60px 0 80px;position:relative;z-index:1;}
 .fcard{
   background:linear-gradient(135deg,rgba(26,63,168,.2),rgba(0,184,240,.05));
@@ -290,12 +219,7 @@ header{
   max-width:620px;margin:0 auto;backdrop-filter:blur(12px);
   position:relative;overflow:hidden;
 }
-.fcard::before{
-  content:'';position:absolute;top:-55px;right:-55px;
-  width:190px;height:190px;
-  background:radial-gradient(circle,rgba(0,184,240,.07) 0%,transparent 70%);
-  pointer-events:none;
-}
+.fcard::before{content:'';position:absolute;top:-55px;right:-55px;width:190px;height:190px;background:radial-gradient(circle,rgba(0,184,240,.07) 0%,transparent 70%);pointer-events:none;}
 .fcard h3{font-size:22px;font-weight:800;margin-bottom:6px;}
 .fcard>p{color:rgba(255,255,255,.5);font-size:14px;margin-bottom:26px;line-height:1.6;}
 
@@ -318,38 +242,26 @@ header{
   padding:12px 14px;color:#fff;font-family:'Tajawal',sans-serif;
   font-size:14px;outline:none;transition:border-color .2s,background .2s;
 }
-.fi-inp:focus,.fi-ta:focus,.fi-sel:focus{
-  border-color:rgba(58,140,232,.48);background:rgba(255,255,255,.09);
-}
+.fi-inp:focus,.fi-ta:focus{border-color:rgba(58,140,232,.48);background:rgba(255,255,255,.09);}
 .fi-inp::placeholder,.fi-ta::placeholder{color:rgba(255,255,255,.27);}
 .fi-ta{resize:vertical;min-height:105px;}
-.fi-sel option{background:#0d2878;color:#fff;}
 
 /* Stars */
 .stars-wrap{display:flex;gap:7px;flex-direction:row-reverse;justify-content:flex-end;}
 .stars-wrap input{display:none;}
-.stars-wrap label{
-  font-size:28px;color:rgba(255,255,255,.17);
-  cursor:pointer;transition:color .15s,transform .15s;
-}
+.stars-wrap label{font-size:28px;color:rgba(255,255,255,.17);cursor:pointer;transition:color .15s,transform .15s;}
 .stars-wrap label:hover,.stars-wrap label:hover~label,.stars-wrap input:checked~label{color:var(--warn);}
 .stars-wrap label:hover{transform:scale(1.2);}
 
 /* File upload */
-.file-zone{
-  border:2px dashed rgba(58,140,232,.3);border-radius:13px;
-  padding:22px;text-align:center;cursor:pointer;
-  transition:border-color .2s,background .2s;
-  background:rgba(255,255,255,.03);
-}
+.file-zone{border:2px dashed rgba(58,140,232,.3);border-radius:13px;padding:22px;text-align:center;cursor:pointer;transition:border-color .2s,background .2s;background:rgba(255,255,255,.03);}
 .file-zone:hover{border-color:rgba(58,140,232,.6);background:rgba(58,140,232,.05);}
 .file-zone .fz-ico{font-size:32px;margin-bottom:6px;}
 .file-zone p{font-size:13px;color:rgba(255,255,255,.5);}
+.file-zone small{font-size:11px;color:rgba(255,255,255,.3);display:block;margin-top:4px;}
 .file-zone input{display:none;}
-#file-preview{
-  margin-top:10px;border-radius:10px;
-  max-width:100%;max-height:180px;object-fit:cover;display:none;
-}
+#file-preview{margin-top:10px;border-radius:10px;max-width:100%;max-height:180px;object-fit:cover;display:none;}
+#compress-status{font-size:11.5px;color:var(--aqua);margin-top:6px;display:none;text-align:center;}
 
 /* Submit button */
 .sbtn{
@@ -365,9 +277,7 @@ header{
 .sbtn:disabled{opacity:.5;cursor:not-allowed;transform:none;}
 
 /* Success overlay */
-.success-box{
-  text-align:center;padding:36px 20px;display:none;
-}
+.success-box{text-align:center;padding:36px 20px;display:none;}
 .success-box .sico{font-size:52px;margin-bottom:14px;}
 .success-box h3{font-size:20px;font-weight:800;margin-bottom:8px;}
 .success-box p{font-size:14px;color:rgba(255,255,255,.55);}
@@ -380,40 +290,24 @@ header{
   color:#fff;padding:12px 24px;border-radius:50px;
   font-size:14px;font-weight:600;z-index:999;
   transition:transform .4s cubic-bezier(.34,1.56,.64,1);
-  box-shadow:0 8px 26px rgba(0,200,100,.3);
-  white-space:nowrap;
+  box-shadow:0 8px 26px rgba(0,200,100,.3);white-space:nowrap;
 }
 .toast.show{transform:translateX(-50%) translateY(0);}
 .toast.err{background:linear-gradient(135deg,#e84040,#c02020);}
 
 /* Spinner */
-.spin{
-  width:18px;height:18px;border:2px solid rgba(255,255,255,.3);
-  border-top-color:#fff;border-radius:50%;
-  animation:sp .7s linear infinite;display:inline-block;
-}
+.spin{width:18px;height:18px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:sp .7s linear infinite;display:inline-block;}
 @keyframes sp{to{transform:rotate(360deg)}}
 
 /* Footer */
-footer{
-  border-top:1px solid rgba(255,255,255,.06);
-  padding:26px 0;text-align:center;position:relative;z-index:1;
-}
-.foot-logo{
-  font-size:17px;font-weight:900;
-  background:linear-gradient(135deg,#fff,var(--aqua-lt));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-  margin-bottom:5px;
-}
+footer{border-top:1px solid rgba(255,255,255,.06);padding:26px 0;text-align:center;position:relative;z-index:1;}
+.foot-logo{font-size:17px;font-weight:900;background:linear-gradient(135deg,#fff,var(--aqua-lt));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:5px;}
 .foot-p{font-size:12px;color:rgba(255,255,255,.27);}
 
-/* ============================================================
-   RESPONSIVE
-   ============================================================ */
+/* Responsive */
 @media(max-width:768px){
-  .sgrid{gap:9px;}
-  .scard{padding:18px 10px;}
-  .scard .num{font-size:30px;}
+  .sgrid{grid-template-columns:repeat(2,1fr);gap:9px;}
+  .scard{padding:18px 10px;}.scard .num{font-size:28px;}
   .ggrid{grid-template-columns:repeat(2,1fr);grid-template-rows:auto;}
   .gitem:first-child{grid-column:span 2;height:190px;}
   .mgrid{grid-template-columns:repeat(auto-fill,minmax(200px,1fr));}
@@ -428,30 +322,22 @@ footer{
 <div class="bg"></div>
 <div class="drops" id="drops"></div>
 
-<!-- ====== HEADER ====== -->
+<!-- ════ HEADER ════ -->
 <header>
   <div class="hdr">
     <div class="logo-wrap">
-      <!-- شعار مزن — استبدل الـ src بصورة حقيقية مرفوعة على Drive -->
-      <img class="logo-img" id="logoImg"
-           src="https://i.imgur.com/placeholder.png"
-           onerror="this.style.display='none';document.getElementById('logoFallback').style.display='flex'"
-           alt="مزن">
-      <!-- Fallback SVG قطرة إذا لم تتوفر الصورة -->
-      <div id="logoFallback" style="display:none;width:46px;height:58px;align-items:center;justify-content:center;">
-        <svg viewBox="0 0 60 75" width="46" height="58" fill="none">
-          <defs>
-            <linearGradient id="dg" x1="0" y1="0" x2="60" y2="75" gradientUnits="userSpaceOnUse">
-              <stop offset="0%" stop-color="#5adaff"/>
-              <stop offset="100%" stop-color="#1a3fa8"/>
-            </linearGradient>
-          </defs>
-          <path d="M30 3 C30 3 5 34 5 48 C5 62 16.5 72 30 72 C43.5 72 55 62 55 48 C55 34 30 3 30 3Z"
-                fill="url(#dg)" opacity=".92"/>
-          <path d="M30 20 C30 20 14 40 14 50 C14 58 21 64 30 64"
-                stroke="rgba(255,255,255,.28)" stroke-width="2" fill="none"/>
-        </svg>
-      </div>
+      <svg class="logo-img" viewBox="0 0 60 75" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="lg" x1="0" y1="0" x2="60" y2="75" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#5adaff"/>
+            <stop offset="100%" stop-color="#1a3fa8"/>
+          </linearGradient>
+        </defs>
+        <path d="M30 3C30 3 5 34 5 48c0 14 11.5 24 25 24s25-10 25-24C55 34 30 3 30 3z" fill="url(#lg)" opacity=".92"/>
+        <path d="M30 20c0 0-16 20-16 30 0 8 7 14 16 14" stroke="rgba(255,255,255,.3)" stroke-width="2" fill="none"/>
+        <circle cx="38" cy="22" r="2" fill="rgba(255,255,255,.6)"/>
+        <circle cx="22" cy="18" r="1.5" fill="rgba(255,255,255,.4)"/>
+      </svg>
       <div class="logo-txt">
         <div class="name">مزن</div>
         <div class="tag">أثر يروي بعطائكم</div>
@@ -465,7 +351,7 @@ footer{
   </div>
 </header>
 
-<!-- ====== HERO ====== -->
+<!-- ════ HERO ════ -->
 <section class="hero">
   <div class="container">
     <div class="eyebrow">💧 منصة التقييمات الرسمية</div>
@@ -475,9 +361,10 @@ footer{
   </div>
 </section>
 
-<!-- ====== STATS ====== -->
+<!-- ════ STATS — 4 cards ════ -->
 <section class="stats">
   <div class="container">
+    <!-- FIX #4: 4 KPI cards including إجمالي العبوات -->
     <div class="sgrid">
       <div class="scard fi">
         <span class="ico">🕌</span>
@@ -487,7 +374,13 @@ footer{
       <div class="scard fi">
         <span class="ico">📦</span>
         <div class="num" id="statBoxes">—</div>
-        <div class="lbl">إجمالي الكراتين الموزَّعة</div>
+        <div class="lbl">كراتين موزَّعة</div>
+      </div>
+      <!-- NEW: إجمالي العبوات = كراتين × 40 -->
+      <div class="scard fi">
+        <span class="ico">💧</span>
+        <div class="num" id="statBottles">—</div>
+        <div class="lbl">إجمالي العبوات (×40)</div>
       </div>
       <div class="scard fi">
         <span class="ico">⭐</span>
@@ -500,13 +393,13 @@ footer{
 
 <div class="div"></div>
 
-<!-- ====== MOSQUE CARDS ====== -->
+<!-- ════ MOSQUE CARDS ════ -->
 <section class="mosques">
   <div class="container">
     <div class="sh fi">
       <div class="tag">🗺️ نقاط التوزيع</div>
       <h2>المساجد المُستفيدة</h2>
-      <p>تراكمي لجميع العبوات الموزعة لكل مسجد</p>
+      <p>إجمالي تراكمي للعبوات الموزعة لكل مسجد</p>
     </div>
     <div class="mgrid fi" id="mosqueGrid">
       <div style="grid-column:1/-1;text-align:center;padding:40px;color:rgba(255,255,255,.35);">
@@ -519,7 +412,7 @@ footer{
 
 <div class="div"></div>
 
-<!-- ====== GALLERY ====== -->
+<!-- ════ GALLERY ════ -->
 <section class="gallery">
   <div class="container">
     <div class="sh fi">
@@ -528,7 +421,6 @@ footer{
       <p>صور حقيقية من الميدان</p>
     </div>
     <div class="ggrid fi" id="galleryGrid">
-      <!-- Static placeholders until images load -->
       <div class="gitem"><div class="gph gph1"><span class="gi">🕌</span><span class="gl">مسجد الرحمة</span></div><div class="gov"><span>📍 حي النزهة</span></div></div>
       <div class="gitem"><div class="gph gph2"><span class="gi">📦</span><span class="gl">تحميل العبوات</span></div><div class="gov"><span>📦 تجهيز الطلبيات</span></div></div>
       <div class="gitem"><div class="gph gph3"><span class="gi">🤝</span><span class="gl">استلام رسمي</span></div><div class="gov"><span>✅ توقيع التسليم</span></div></div>
@@ -540,7 +432,7 @@ footer{
 
 <div class="div"></div>
 
-<!-- ====== REVIEWS ====== -->
+<!-- ════ REVIEWS ════ -->
 <section class="reviews">
   <div class="container">
     <div class="sh fi">
@@ -559,7 +451,7 @@ footer{
 
 <div class="div"></div>
 
-<!-- ====== FORM SECTION ====== -->
+<!-- ════ FORM SECTION ════ -->
 <section class="formsec" id="formSection">
   <div class="container">
     <div class="sh fi">
@@ -568,25 +460,27 @@ footer{
       <p>لكل من استفاد من خدمة مزن</p>
     </div>
 
-    <!-- Token error state -->
+    <!-- Token error -->
     <div class="token-err fi" id="tokenErr" style="display:none;">
       <div class="ico-big">🔒</div>
       <h3>رابط غير صالح</h3>
-      <p>هذا الرابط لا يحتوي على معرّف صحيح، أو تم استخدامه مسبقاً.<br>تواصل مع فريق مزن للحصول على رابطك الخاص.</p>
+      <p>هذا الرابط لا يحتوي على معرّف صحيح، أو تم استخدامه مسبقاً، أو أن الطلب لم يعد في حالة Pending.<br>تواصل مع فريق مزن للحصول على رابطك الخاص.</p>
     </div>
 
-    <!-- Customer form -->
+    <!-- ════ CUSTOMER FORM ════ -->
     <div class="fcard fi" id="customerForm" style="display:none;">
       <h3>⭐ نموذج تقييم المساهم</h3>
       <p>شاركنا تجربتك مع خدمة مزن بكل صدق وشفافية.</p>
 
       <div class="fg">
+        <!-- FIX #8: field name = displayName -->
         <label class="fl">اسمك (اختياري)</label>
         <input class="fi-inp" id="cName" placeholder="يمكنك الإبقاء على مجهوليتك">
       </div>
       <div class="fg">
+        <!-- FIX #8: rating stars -->
         <label class="fl">تقييمك *</label>
-        <div class="stars-wrap" id="starsPicker">
+        <div class="stars-wrap">
           <input type="radio" name="stars" id="s5" value="5"><label for="s5">★</label>
           <input type="radio" name="stars" id="s4" value="4"><label for="s4">★</label>
           <input type="radio" name="stars" id="s3" value="3"><label for="s3">★</label>
@@ -601,9 +495,7 @@ footer{
 
       <button class="sbtn" id="cBtn" onclick="submitCustomer()">
         <span id="cBtnTxt">إرسال التقييم</span>
-        <svg width="18" height="18" viewBox="0 0 60 75" fill="none">
-          <path d="M30 3 C30 3 5 34 5 48 C5 62 16.5 72 30 72 C43.5 72 55 62 55 48 C55 34 30 3 30 3Z" fill="rgba(255,255,255,.7)"/>
-        </svg>
+        <svg width="16" height="20" viewBox="0 0 60 75" fill="none"><path d="M30 3C30 3 5 34 5 48c0 14 11.5 24 25 24s25-10 25-24C55 34 30 3 30 3z" fill="rgba(255,255,255,.7)"/></svg>
       </button>
       <div class="success-box" id="cSuccess">
         <div class="sico">✅</div>
@@ -612,40 +504,37 @@ footer{
       </div>
     </div>
 
-    <!-- Driver form -->
+    <!-- ════ DRIVER FORM ════ -->
     <div class="fcard fi" id="driverForm" style="display:none;">
       <h3>📸 نموذج توثيق التوصيل</h3>
-      <p>وثّق عملية التوصيل بصورة وبيانات دقيقة لتحديث الحالة تلقائياً.</p>
-<div class="text-right">
-   <div class="fg">
-      <label class="fl">اسم المورد / جهة التوريد</label>
-    <label class="block text-blue-200 text-sm mb-2 mr-1">اسم المورد / جهة التوريد</label>
-       </div>
+      <p>وثّق عملية التوصيل بصورة وبيانات دقيقة.</p>
+
+      <!-- FIX #2: اسم المورد / المندوب -->
       <div class="fg">
-         <div class="fg">
-        <label class="fl">اسمك (اختياري)</label>
-        <input class="fi-inp" id="cName" placeholder="يمكنك الإبقاء على مجهوليتك">
+        <label class="fl">اسم المورد / المندوب *</label>
+        <input class="fi-inp" id="dDriverName" placeholder="الاسم الكامل للمندوب المُسلِّم">
       </div>
-</div>
+
       <div class="fg">
         <label class="fl">ملاحظات (اختياري)</label>
         <textarea class="fi-ta" id="dNote" style="min-height:80px" placeholder="أي ملاحظات على عملية التوصيل…"></textarea>
       </div>
       <div class="fg">
         <label class="fl">صورة التوثيق * (إجبارية)</label>
+        <!-- FIX #6: compression hint in UI -->
         <div class="file-zone" onclick="document.getElementById('imgInput').click()">
           <div class="fz-ico">📷</div>
           <p>اضغط لاختيار صورة من الجهاز</p>
-          <input type="file" id="imgInput" accept="image/*" onchange="previewImg(this)">
+          <small>سيتم ضغطها تلقائياً (أقل من 300KB)</small>
+          <input type="file" id="imgInput" accept="image/*" onchange="handleImageSelect(this)">
         </div>
         <img id="file-preview" alt="معاينة">
+        <div id="compress-status"></div>
       </div>
 
       <button class="sbtn" id="dBtn" onclick="submitDriver()">
         <span id="dBtnTxt">إرسال التوثيق</span>
-        <svg width="18" height="18" viewBox="0 0 60 75" fill="none">
-          <path d="M30 3 C30 3 5 34 5 48 C5 62 16.5 72 30 72 C43.5 72 55 62 55 48 C55 34 30 3 30 3Z" fill="rgba(255,255,255,.7)"/>
-        </svg>
+        <svg width="16" height="20" viewBox="0 0 60 75" fill="none"><path d="M30 3C30 3 5 34 5 48c0 14 11.5 24 25 24s25-10 25-24C55 34 30 3 30 3z" fill="rgba(255,255,255,.7)"/></svg>
       </button>
       <div class="success-box" id="dSuccess">
         <div class="sico">✅</div>
@@ -657,7 +546,7 @@ footer{
   </div>
 </section>
 
-<!-- ====== FOOTER ====== -->
+<!-- ════ FOOTER ════ -->
 <footer>
   <div class="foot-logo">مزن 💧</div>
   <p class="foot-p">نُوصِل النقاء إلى بيوت الله · جميع الحقوق محفوظة © 2025</p>
@@ -665,11 +554,13 @@ footer{
 
 <div class="toast" id="toast"></div>
 
-<!-- ============================================================
+<!-- ════════════════════════════════════════
      JAVASCRIPT
-     ============================================================ -->
+════════════════════════════════════════ -->
 <script>
-// ▸▸ استبدل هذا الرابط برابط Web App الخاص بك من Google Apps Script
+'use strict';
+
+// ▸▸ استبدل برابط Web App الخاص بك من Google Apps Script
 const GAS_URL = 'https://script.google.com/macros/s/AKfycbwR8Dr7kWrerTRIOSXekvRcMTZV9PGDmrkqLD_TjKB8CNVGB-IFGTal7eNJm2VB6isO/exec';
 
 // ── Floating drops ──
@@ -697,7 +588,8 @@ document.querySelectorAll('.fi').forEach(el=>io.observe(el));
 
 // ── Counter animation ──
 function countTo(el, target, suffix=''){
-  const dur=1800, start=performance.now();
+  if(!el) return;
+  const dur=1600, start=performance.now();
   (function tick(now){
     const p=Math.min((now-start)/dur,1);
     const v=Math.round((1-Math.pow(1-p,3))*target);
@@ -707,7 +599,7 @@ function countTo(el, target, suffix=''){
 }
 
 // ── Toast ──
-function toast(msg,err=false){
+function toast(msg, err=false){
   const t=document.getElementById('toast');
   t.textContent=msg;
   t.className='toast'+(err?' err':'');
@@ -715,39 +607,111 @@ function toast(msg,err=false){
   setTimeout(()=>t.classList.remove('show'),3500);
 }
 
-// ── Scroll to form ──
 function scrollToForm(){
   document.getElementById('formSection').scrollIntoView({behavior:'smooth'});
 }
 
-// ── Image preview ──
-function previewImg(inp){
-  const f=inp.files[0];
-  if(!f) return;
-  const pr=document.getElementById('file-preview');
-  pr.src=URL.createObjectURL(f);
-  pr.style.display='block';
+// ── HTML escape ──
+function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+// ================================================================
+//  FIX #3: Convert Google Drive share links → direct image URLs
+// ================================================================
+function driveDirectUrl(url){
+  if(!url) return '';
+  // Pattern: /file/d/FILE_ID/view or /open?id=FILE_ID or uc?id=FILE_ID
+  let id = null;
+  const m1 = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
+  const m2 = url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+  if(m1) id = m1[1];
+  else if(m2) id = m2[1];
+
+  if(id) return `https://drive.google.com/uc?export=view&id=${id}`;
+  return url; // already a direct link or unknown format
 }
 
 // ================================================================
-//  LOAD PUBLIC DATA  (stats + mosque cards + reviews + gallery)
+//  FIX #6: Client-side image compression using Canvas
+//  Max 1024px, JPEG quality 0.7, target < 300KB
+// ================================================================
+let _compressedBase64 = null;
+let _compressedMime   = 'image/jpeg';
+
+function handleImageSelect(input){
+  const file = input.files[0];
+  if(!file) return;
+
+  const statusEl  = document.getElementById('compress-status');
+  const previewEl = document.getElementById('file-preview');
+
+  statusEl.style.display = 'block';
+  statusEl.textContent = '⏳ جاري ضغط الصورة…';
+  _compressedBase64 = null;
+
+  const reader = new FileReader();
+  reader.onload = function(e){
+    const img = new Image();
+    img.onload = function(){
+      // Step 1: resize to max 1024px
+      let w = img.width, h = img.height;
+      const MAX = 1024;
+      if(w > MAX || h > MAX){
+        if(w > h){ h = Math.round(h * MAX / w); w = MAX; }
+        else      { w = Math.round(w * MAX / h); h = MAX; }
+      }
+
+      const canvas = document.createElement('canvas');
+      canvas.width = w; canvas.height = h;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0, w, h);
+
+      // Step 2: try quality 0.7, if still > 300KB reduce quality
+      let quality = 0.7;
+      let dataUrl = canvas.toDataURL('image/jpeg', quality);
+      let sizeKB  = Math.round((dataUrl.length * 3/4) / 1024);
+
+      // Step 3: iteratively reduce quality if needed
+      while(sizeKB > 300 && quality > 0.3){
+        quality -= 0.05;
+        dataUrl = canvas.toDataURL('image/jpeg', quality);
+        sizeKB  = Math.round((dataUrl.length * 3/4) / 1024);
+      }
+
+      _compressedBase64 = dataUrl.split(',')[1];
+      _compressedMime   = 'image/jpeg';
+
+      // Show preview
+      previewEl.src = dataUrl;
+      previewEl.style.display = 'block';
+
+      statusEl.textContent = `✅ الصورة جاهزة — ${w}×${h}px · ${sizeKB}KB · جودة ${Math.round(quality*100)}%`;
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+// ================================================================
+//  LOAD PUBLIC DATA
 // ================================================================
 async function loadPublicData(){
   try{
-    const r = await fetch(GAS_URL+'?action=getPublicData', {method:'GET'});
+    const r = await fetch(GAS_URL+'?action=getPublicData');
     const d = await r.json();
     if(d.error) throw new Error(d.error);
 
     // ── Stats ──
-    const sm=document.getElementById('statMosques');
-    const sb=document.getElementById('statBoxes');
-    const sr=document.getElementById('statRating');
+    const boxes   = d.stats.boxes   || 0;
+    const mosques = d.stats.mosques  || 0;
+    const rating  = d.stats.rating  || 0;
 
-    sm.dataset.target = d.stats.mosques;
-    sb.dataset.target = d.stats.boxes;
-    countTo(sm, d.stats.mosques);
-    countTo(sb, d.stats.boxes);
-    sr.textContent = d.stats.rating > 0 ? d.stats.rating.toFixed(1)+' ★' : '—';
+    // FIX #4: إجمالي العبوات = كراتين × 40
+    const bottles = boxes * 40;
+
+    countTo(document.getElementById('statMosques'), mosques);
+    countTo(document.getElementById('statBoxes'),   boxes);
+    countTo(document.getElementById('statBottles'), bottles);
+    document.getElementById('statRating').textContent = rating > 0 ? rating.toFixed(1) + ' ★' : '—';
 
     // ── Mosque cards ──
     const mg = document.getElementById('mosqueGrid');
@@ -757,7 +721,7 @@ async function loadPublicData(){
           <div class="mico">🕌</div>
           <div class="mname">${esc(m.name)}</div>
           <div class="mdistrict">📍 ${esc(m.district)}</div>
-          <div class="mboxes">📦 <span>${m.boxes.toLocaleString('ar-SA')}</span> عبوة موزَّعة</div>
+          <div class="mboxes">📦 <span>${m.boxes.toLocaleString('ar-SA')}</span> كرتون · 💧 <span style="color:var(--aqua-lt)">${(m.boxes*40).toLocaleString('ar-SA')}</span> عبوة</div>
         </div>`).join('');
       mg.querySelectorAll('.fi').forEach(el=>io.observe(el));
     } else {
@@ -770,89 +734,93 @@ async function loadPublicData(){
       rg.innerHTML = d.reviews.map(rv=>`
         <div class="rcard fi">
           <div class="rtop">
-            <div class="ava">${esc(rv.display.charAt(0))}</div>
-            <div>
-              <div class="rname">${esc(rv.display)}</div>
-              <div class="rentity">🕌 ${esc(rv.type)}</div>
-            </div>
+            <div class="ava">${esc((rv.display||'م').charAt(0))}</div>
+            <div><div class="rname">${esc(rv.display)}</div><div class="rentity">🏷️ ${esc(rv.type)}</div></div>
           </div>
           <div class="rstars">
             ${'★'.repeat(rv.stars).split('').map(()=>'<span class="f">★</span>').join('')}
-            ${'★'.repeat(5-rv.stars).split('').map(()=>'<span class="e">★</span>').join('')}
+            ${'★'.repeat(5-rv.stars).split('').map(()=>'<span style="color:rgba(255,255,255,.15)">★</span>').join('')}
           </div>
           <p class="rtext">${esc(rv.comment)}</p>
-          <div class="rmeta">
-            <span>🕐 ${esc(rv.ts)}</span>
-            <span class="vbadge">✓ موثَّق</span>
-          </div>
+          <div class="rmeta"><span>🕐 ${esc(rv.ts)}</span><span class="vbadge">✓ موثَّق</span></div>
         </div>`).join('');
       rg.querySelectorAll('.fi').forEach(el=>io.observe(el));
     } else {
       rg.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:40px;color:rgba(255,255,255,.35);">لا توجد تقييمات بعد</div>';
     }
 
-    // ── Gallery images from drivers ──
+    // ── FIX #3: Gallery — convert Drive links to direct URLs ──
     if(d.images && d.images.length){
       const gg = document.getElementById('galleryGrid');
       const imgs = d.images.slice(0,5);
-      gg.innerHTML = imgs.map((url,i)=>`
-        <div class="gitem${i===0?' fi':''}">
-          <img src="${esc(url)}" loading="lazy" alt="توثيق توصيل">
+      gg.innerHTML = imgs.map((url,i)=>{
+        const direct = driveDirectUrl(url);
+        return `<div class="gitem${i===0?' fi':''}">
+          <img src="${esc(direct)}" loading="lazy"
+               onerror="this.parentElement.innerHTML='<div class=\\'gph gph${(i%5)+1}\\'><span class=\\'gi\\'>📸</span><span class=\\'gl\\'>توثيق توصيل</span></div>'"
+               alt="توثيق توصيل">
           <div class="gov"><span>📸 توثيق مندوب</span></div>
-        </div>`).join('');
+        </div>`;
+      }).join('');
     }
 
   } catch(err){
     console.warn('loadPublicData:', err.message);
-    // Silently keep placeholder UI — no data yet
+    // keep placeholder UI
   }
 }
 
 // ================================================================
-//  TOKEN VALIDATION & FORM INIT
+//  FIX #1: Token validation — check orderId + type + Status=Active
 // ================================================================
 async function initForm(){
-  const params = new URLSearchParams(window.location.search);
-  const orderId = params.get('id');
+  const params  = new URLSearchParams(window.location.search);
+  const orderId = params.get('id');  // e.g. "1001-C" or "1001-D"
 
   if(!orderId){
-    document.getElementById('tokenErr').style.display='block';
+    // No token → don't show form, just public page
     return;
   }
 
   try{
-    const r = await fetch(GAS_URL+`?action=validateToken&id=${encodeURIComponent(orderId)}`);
+    const r = await fetch(`${GAS_URL}?action=validateToken&id=${encodeURIComponent(orderId)}`);
     const d = await r.json();
 
-    if(d.valid === false){
-      document.getElementById('tokenErr').style.display='block';
+    if(!d.valid){
+      document.getElementById('tokenErr').style.display = 'block';
+      document.getElementById('formSection').scrollIntoView({behavior:'smooth'});
       return;
     }
 
     // Store for submission
-    window._orderId   = orderId;
-    window._entryType = d.entryType;   // 'Customer' | 'Driver'
-    window._mosqueName= d.mosqueName;
+    window._orderId    = orderId;
+    window._entryType  = d.entryType;   // 'Customer' | 'Driver'
+    window._mosqueName = d.mosqueName;
 
+    // FIX #1: Show correct form based on entryType
     if(d.entryType === 'Driver'){
-      document.getElementById('driverForm').style.display='block';
+      document.getElementById('driverForm').style.display = 'block';
     } else {
-      document.getElementById('customerForm').style.display='block';
+      document.getElementById('customerForm').style.display = 'block';
     }
 
+    document.getElementById('formSection').scrollIntoView({behavior:'smooth'});
+
   } catch(err){
-    document.getElementById('tokenErr').style.display='block';
+    document.getElementById('tokenErr').style.display = 'block';
   }
 }
-// ================================================================
-//  SUBMIT — CUSTOMER (إرسال تقييم العميل)
-// ================================================================
-async function submitCustomer() {
-  const name    = document.getElementById('cName').value.trim();
-  const comment = document.getElementById('cComment').value.trim();
-  const stars   = document.querySelector('input[name="stars"]:checked');
 
-  if (!comment || !stars) {
+// ================================================================
+//  FIX #7 & #8: SUBMIT CUSTOMER
+//  Fields: action=submitRating, displayName, rating, comment, orderId
+// ================================================================
+async function submitCustomer(){
+  const displayName = document.getElementById('cName').value.trim();
+  const comment     = document.getElementById('cComment').value.trim();
+  const ratingInput = document.querySelector('input[name="stars"]:checked');
+
+  if(!comment || !ratingInput){
     toast('يرجى اختيار التقييم وكتابة تعليق', true);
     return;
   }
@@ -861,28 +829,30 @@ async function submitCustomer() {
   btn.disabled = true;
   document.getElementById('cBtnTxt').innerHTML = '<span class="spin"></span> جاري الإرسال…';
 
-  try {
+  try{
     const fd = new FormData();
-    fd.append('action',    'submitRating');
-    fd.append('orderId',   window._orderId);
-    fd.append('entryType', 'Customer');
-    fd.append('name',      name || 'مساهم فاعل');
-    fd.append('rating',    stars.value);
-    fd.append('comment',   comment);
+    // FIX #8: unified action name = submitRating
+    fd.append('action',      'submitRating');
+    fd.append('orderId',     window._orderId);
+    fd.append('entryType',   'Customer');
+    // FIX #8: field = displayName
+    fd.append('displayName', displayName || 'مساهم익명');
+    // FIX #8: field = rating
+    fd.append('rating',      ratingInput.value);
+    fd.append('comment',     comment);
 
-    const r = await fetch(GAS_URL, { method: 'POST', body: fd });
+    const r = await fetch(GAS_URL, {method:'POST', body:fd});
     const d = await r.json();
 
-    if (d.success) {
+    if(d.success){
       document.getElementById('cBtn').style.display = 'none';
       document.getElementById('cSuccess').style.display = 'block';
-      toast('✅ شكراً لتقييمك الغالي!');
-      // تحديث البيانات في الصفحة بعد ثانيتين لرؤية التقييم الجديد
+      toast('✅ تم إرسال تقييمك بنجاح!');
       setTimeout(loadPublicData, 2000);
     } else {
       throw new Error(d.error || 'فشل الإرسال');
     }
-  } catch (err) {
+  } catch(err){
     toast('⚠️ خطأ: ' + err.message, true);
     btn.disabled = false;
     document.getElementById('cBtnTxt').textContent = 'إرسال التقييم';
@@ -890,14 +860,20 @@ async function submitCustomer() {
 }
 
 // ================================================================
-//  SUBMIT — DRIVER (إرسال توثيق المندوب)
+//  FIX #2, #6, #7, #8: SUBMIT DRIVER
+//  Fields: action=submitRating, displayName (driver name), imageBase64, orderId
 // ================================================================
-async function submitDriver() {
-  const note = document.getElementById('dNote').value.trim();
-  const file = document.getElementById('imgInput').files[0];
+async function submitDriver(){
+  const driverName = document.getElementById('dDriverName').value.trim();
+  const note       = document.getElementById('dNote').value.trim();
 
-  if (!file) {
-    toast('الصورة إجبارية للمندوب', true);
+  if(!driverName){
+    toast('يرجى إدخال اسم المورد / المندوب', true);
+    return;
+  }
+
+  if(!_compressedBase64){
+    toast('الصورة إجبارية — يرجى اختيار صورة وانتظار الضغط', true);
     return;
   }
 
@@ -905,55 +881,40 @@ async function submitDriver() {
   btn.disabled = true;
   document.getElementById('dBtnTxt').innerHTML = '<span class="spin"></span> جاري الرفع…';
 
-  try {
-    // تحويل الصورة إلى Base64 لأن Apps Script يفضلها بهذا الشكل
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = async () => {
-      const base64 = reader.result.split(',')[1];
-      
-      const fd = new FormData();
-      fd.append('action',    'submitDelivery');
-      fd.append('orderId',   window._orderId);
-      fd.append('entryType', 'Driver');
-      fd.append('note',      note);
-      fd.append('image',     base64);
-      fd.append('mimeType',  file.type);
-      fd.append('fileName',  file.name);
+  try{
+    const fd = new FormData();
+    // FIX #8: action = submitRating (unified, backend distinguishes by entryType)
+    fd.append('action',      'submitRating');
+    fd.append('orderId',     window._orderId);
+    fd.append('entryType',   'Driver');
+    // FIX #2 & #8: driver name stored as displayName
+    fd.append('displayName', driverName);
+    fd.append('comment',     note || 'تم التوصيل');
+    // FIX #8: field = imageBase64
+    fd.append('imageBase64', _compressedBase64);
+    fd.append('imageMime',   _compressedMime);
 
-      const r = await fetch(GAS_URL, { method: 'POST', body: fd });
-      const d = await r.json();
+    const r = await fetch(GAS_URL, {method:'POST', body:fd});
+    const d = await r.json();
 
-      if (d.success) {
-        document.getElementById('dBtn').style.display = 'none';
-        document.getElementById('dSuccess').style.display = 'block';
-        toast('✅ تم التوثيق بنجاح!');
-        setTimeout(loadPublicData, 2000);
-      } else {
-        throw new Error(d.error || 'فشل الرفع');
-      }
-    };
-  } catch (err) {
+    if(d.success){
+      document.getElementById('dBtn').style.display = 'none';
+      document.getElementById('dSuccess').style.display = 'block';
+      toast('✅ تم التوثيق وتحديث الحالة!');
+      setTimeout(loadPublicData, 2000);
+    } else {
+      throw new Error(d.error || 'فشل الإرسال');
+    }
+  } catch(err){
     toast('⚠️ خطأ: ' + err.message, true);
     btn.disabled = false;
     document.getElementById('dBtnTxt').textContent = 'إرسال التوثيق';
   }
 }
 
-// دالة مساعدة لتنظيف النصوص
-function esc(t) {
-  if (!t) return '';
-  const d = document.createElement('div');
-  d.textContent = t;
-  return d.innerHTML;
-}
-
-// تشغيل جلب البيانات عند فتح الصفحة
-window.addEventListener('DOMContentLoaded', () => {
-  loadPublicData();
-  initForm();
-});
-
+// ── INIT ──
+loadPublicData();
+initForm();
 </script>
 </body>
 </html>
