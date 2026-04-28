@@ -96,7 +96,7 @@ header{position:sticky;top:0;z-index:200;backdrop-filter:blur(22px);
 
 /* GALLERY */
 .gallery{padding:60px 0;position:relative;z-index:1;}
-.ggrid{display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:185px 185px;gap:10px;}
+.ggrid{display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:185px 185px;gap:10px;min-height:380px;}
 .gi{border-radius:14px;overflow:hidden;position:relative;cursor:pointer;background:var(--royal);}
 .gi:first-child{grid-column:span 2;grid-row:span 2;}
 .gi img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s;}
@@ -535,11 +535,7 @@ async function loadPublicData(){
         </div>`).join('');
     }
 
-    if(d.images && d.images.length){
-        const gg=document.getElementById('galleryGrid');
-        gg.innerHTML=d.images.slice(0,5).map(url=>`
-          <div class="gi"><img src="${esc(url)}" loading="lazy"><div class="gov"><span>📸 توثيق مندوب</span></div></div>
-        `).join('');
+if(d.images&&d.images.length){const gg=document.getElementById('galleryGrid');gg.innerHTML=d.images.slice(0,5).map(url=>`<div class="gi"><img src="${directUrl(url)}" loading="lazy" onerror="this.src='https://placehold.co/400x300/04102a/FFFFFF?text=Muzn'"><div class="gov"><span>📸 توثيق ميداني</span></div></div>`).join('');}
     }
     document.querySelectorAll('.fi').forEach(el=>io.observe(el));
   }catch(err){ console.warn('loadPublicData:', err.message); }
