@@ -320,12 +320,7 @@ footer{border-top:1px solid rgba(255,255,255,.06);padding:24px 0;text-align:cent
       <p>صور حقيقية من الميدان</p>
     </div>
     <div class="ggrid fi" id="galleryGrid">
-      <div class="gi"><div class="gph gph1"><span class="gi-icon">🕌</span><span class="gi-lbl">مسجد الرحمة</span></div><div class="gov"><span>📍 حي النزهة</span></div></div>
-      <div class="gi"><div class="gph gph2"><span class="gi-icon">📦</span><span class="gi-lbl">تحميل العبوات</span></div><div class="gov"><span>📦 تجهيز الطلبيات</span></div></div>
-      <div class="gi"><div class="gph gph3"><span class="gi-icon">🤝</span><span class="gi-lbl">استلام رسمي</span></div><div class="gov"><span>✅ توقيع التسليم</span></div></div>
-      <div class="gi"><div class="gph gph4"><span class="gi-icon">💧</span><span class="gi-lbl">عبوات مزن</span></div><div class="gov"><span>💧 جودة عالية</span></div></div>
-      <div class="gi"><div class="gph gph5"><span class="gi-icon">🚗</span><span class="gi-lbl">أسطول مزن</span></div><div class="gov"><span>🚗 التوصيل اليومي</span></div></div>
-    </div>
+
   </div>
 </section>
 
@@ -670,15 +665,25 @@ async function submitCustomer(){
     const url = `${GAS_URL}?action=submitRating&orderId=${window._rawId}&displayName=${encodeURIComponent(name)}&rating=${rating}&comment=${encodeURIComponent(comment)}`;
     const r=await fetch(url, { method:'POST' });
     const d=await r.json();
-    if(d.success){
+   if(d.success){
       document.getElementById('customerForm').innerHTML = document.getElementById('cSuccess').innerHTML;
       toast('✅ شكراً لتقييمك');
       loadPublicData();
-    } else throw new Error(d.error);
-  } catch(err){ toast(err.message, true); btn.disabled=false; }
+    } else {
+      throw new Error(d.error);
+    }
+  } catch(err) { // هذا هو الـ catch الذي كان مفقوداً
+    toast(err.message, true);
+    btn.disabled = false;
+    if(document.getElementById('cTxt')) document.getElementById('cTxt').textContent = 'إرسال التقييم';
+  }
 }
 
-window.onload = () => { loadPublicData(); initForm(); };
+// --- تشغيل الدوال عند تحميل الصفحة ---
+window.onload = () => { 
+  loadPublicData(); 
+  initForm(); 
+};
 </script>
 </body>
 </html>
