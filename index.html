@@ -581,11 +581,6 @@ gg.innerHTML = deliveryImages.map(rv => `
     }
 }
 
-    if(d.images && d.images.length){
-      const gg = document.getElementById('galleryGrid');
-      gg.innerHTML = d.images.slice(0, 5).map(url => `
-        <div class="gi"><img src="${directUrl(url)}" loading="lazy" onerror="this.src='https://placehold.co/400x300/04102a/FFFFFF?text=Muzn'"><div class="gov"><span>📸 توثيق ميداني</span></div></div>`).join('');
-    }
     
     // تأكد أن هذا السطر داخل الـ try أو بعد الـ catch تماماً
     document.querySelectorAll('.fi').forEach(el => io.observe(el));
