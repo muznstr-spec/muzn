@@ -531,19 +531,19 @@ function compressImage(input){
 }
 
 // ════════════════════════════════════════════
-//  LOAD PUBLIC DATA
-// ════════════════════════════════════════════
 async function loadPublicData(){
   try {
     const r = await fetch(GAS_URL + '?action=getPublicData');
     const d = await r.json();
     if(d.error) throw new Error(d.error);
 
+    // 1. تحديث الإحصائيات
     countTo('sMosques', d.stats.mosques || 0);
     countTo('sBoxes', d.stats.boxes || 0);
     countTo('sBottles', d.stats.bottles || 0);
     document.getElementById('sRating').textContent = d.stats.rating > 0 ? d.stats.rating.toFixed(1) + ' ★' : '—';
 
+    // 2. تحديث قائمة المساجد
     const mg = document.getElementById('mosqueGrid');
     if(d.mosques && d.mosques.length){
       mg.innerHTML = d.mosques.map(m => `
@@ -557,31 +557,45 @@ async function loadPublicData(){
         </div>`).join('');
     }
 
-    const rg = document.getElementById('reviewsGrid');
-if (d.reviews && d.reviews.length) {
+    // 3. تحديث الجاليري (نظام قوقل ماب - صور المناديب فقط)
     const gg = document.getElementById('galleryGrid');
-    // تصفية السجلات التي تحتوي على صور فقط (توثيق المندوبين)
-    const deliveryImages = d.reviews.filter(rv => rv.img && rv.img.length > 5);
-
-    if (deliveryImages.length > 0) {
-// داخل دالة loadPublicData عند توليد الجاليري
-gg.innerHTML = deliveryImages.map(rv => `
-    <div class="gi">
-        <img src="${directUrl(rv.img)}" loading="lazy">
-        <div class="gov">
-            <span>💬 ${esc(rv.comment)}</span>
-            <span class="driver-name">👤 المندوب: ${esc(rv.display)}</span>
-        </div>
-    </div>`).join('');
+    if (gg && d.reviews && d.reviews.length) {
+        const deliveryImages = d.reviews.filter(rv => rv.img && rv.img.length > 10);
+        if (deliveryImages.length > 0) {
+            gg.innerHTML = deliveryImages.map(rv => `
+                <div class="gi">
+                    <img src="${directUrl(rv.img)}" loading="lazy">
+                    <div class="gov">
+                        <span>💬 ${esc(rv.comment)}</span>
+                        <span style="display:block;font-size:0.8em;opacity:0.8">👤 المندوب: ${esc(rv.display)}</span>
+                    </div>
+                </div>`).join('');
+        }
     }
-}
 
-    
-    // تأكد أن هذا السطر داخل الـ try أو بعد الـ catch تماماً
+    // 4. تحديث آراء المساهمين (التقييمات بدون صور)
+    const rg = document.getElementById('reviewsGrid');
+    if (rg && d.reviews && d.reviews.length) {
+        const customerReviews = d.reviews.filter(rv => !rv.img || rv.img.length < 10);
+        if (customerReviews.length > 0) {
+            rg.innerHTML = customerReviews.map(rv => `
+                <div class="r-card fi">
+                    <div class="r-head">
+                        <div class="r-name">${esc(rv.display)}</div>
+                        <div class="r-stars">${'★'.repeat(rv.stars || 5)}</div>
+                    </div>
+                    <div class="r-body">${esc(rv.comment)}</div>
+                </div>`).join('');
+        } else {
+            rg.innerHTML = '<p style="text-align:center;grid-column:1/-1;opacity:0.5">لا توجد تقييمات بعد</p>';
+        }
+    }
+
+    // تفعيل أنيميشن الظهور
     document.querySelectorAll('.fi').forEach(el => io.observe(el));
 
   } catch(err) { 
-    console.warn('loadPublicData:', err.message); 
+    console.warn('loadPublicData Error:', err.message); 
   }
 }
 
