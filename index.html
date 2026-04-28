@@ -418,12 +418,13 @@ footer{border-top:1px solid rgba(255,255,255,.06);padding:24px 0;text-align:cent
 <script>
 'use strict';
 
-// ▸▸ ضع هنا رابط Web App من Google Apps Script
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbzJ_Ze3pkWBFo1QEbANSa5SrCH3kFmkGHxW7IcTXdEDsvUshXJvceBaomOa_d7c3iEk/exec';
+// ▸▸ رابط الـ Web App المحدث (Deployment ID الجديد)
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbxREI2pY_BUR2uuyDFf84g1kIrt2YaMBHwi8_RIJgvmyEeGhpnoJlGb5AtdvCQcSdDN/exec';
 
 // ── Floating drops ──
 (function(){
   const L = document.getElementById('dropsLayer');
+  if(!L) return;
   for(let i=0;i<12;i++){
     const d=document.createElement('div'); d.className='drop';
     const s=Math.random()*36+14;
@@ -452,9 +453,11 @@ function countTo(id,target){
     el.textContent=v.toLocaleString('ar-SA'); if(p<1)requestAnimationFrame(tick);
   })(start);
 }
-function scrollTo(id){document.getElementById(id).scrollIntoView({behavior:'smooth'});}
+function scrollTo(id){
+    const el = document.getElementById(id);
+    if(el) el.scrollIntoView({behavior:'smooth'});
+}
 
-// ── Convert Drive URL to direct ──
 function directUrl(url){
   if(!url)return'';
   if(url.includes('export=view'))return url;
@@ -463,8 +466,7 @@ function directUrl(url){
 }
 
 // ════════════════════════════════════════════
-//  IMAGE COMPRESSION — Canvas, max 1024px,
-//  JPEG q=0.7, target < 300KB
+//  IMAGE COMPRESSION
 // ════════════════════════════════════════════
 let _b64=null, _mime='image/jpeg';
 
@@ -488,7 +490,7 @@ function compressImage(input){
       while(kb>300&&q>0.3){q-=0.05;url=cvs.toDataURL('image/jpeg',q);kb=Math.round(url.length*3/4/1024);}
       _b64=url.split(',')[1]; _mime='image/jpeg';
       prev.src=url; prev.style.display='block';
-      stat.textContent=`✅ جاهزة — ${w}×${h}px · ${kb}KB · جودة ${Math.round(q*100)}%`;
+      stat.textContent=`✅ جاهزة — ${w}×${h}px · ${kb}KB`;
     };
     img.src=e.target.result;
   };
@@ -502,20 +504,16 @@ async function loadPublicData(){
   try{
     const r=await fetch(GAS_URL+'?action=getPublicData');
     const d=await r.json();
-    if(d.error)throw new Error(d.error);
+    if(d.error) throw new Error(d.error);
 
-    const {stats,mosques,reviews,images}=d;
+    countTo('sMosques', d.stats.mosques||0);
+    countTo('sBoxes', d.stats.boxes||0);
+    countTo('sBottles', d.stats.bottles||0);
+    document.getElementById('sRating').textContent = d.stats.rating > 0 ? d.stats.rating.toFixed(1)+' ★' : '—';
 
-    // Stats
-    countTo('sMosques', stats.mosques||0);
-    countTo('sBoxes',   stats.boxes  ||0);
-    countTo('sBottles', stats.bottles||0);   // boxes × 40 from backend
-    document.getElementById('sRating').textContent = stats.rating>0 ? stats.rating.toFixed(1)+' ★' : '—';
-
-    // Mosque cards
     const mg=document.getElementById('mosqueGrid');
-    if(mosques&&mosques.length){
-      mg.innerHTML=mosques.map(m=>`
+    if(d.mosques && d.mosques.length){
+      mg.innerHTML=d.mosques.map(m=>`
         <div class="mcard fi">
           <div class="mn">🕌 ${esc(m.name)}</div>
           <div class="md">📍 ${esc(m.district)}</div>
@@ -524,58 +522,38 @@ async function loadPublicData(){
             <div class="chip">💧 <b>${(m.boxes*40).toLocaleString('ar-SA')}</b> عبوة</div>
           </div>
         </div>`).join('');
-      mg.querySelectorAll('.fi').forEach(el=>io.observe(el));
-    } else {
-      mg.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:40px;color:rgba(255,255,255,.3)">لا توجد بيانات بعد</div>';
     }
 
-    // Reviews
     const rg=document.getElementById('reviewsGrid');
-    if(reviews&&reviews.length){
-      rg.innerHTML=reviews.map(rv=>`
+    if(d.reviews && d.reviews.length){
+      rg.innerHTML=d.reviews.map(rv=>`
         <div class="rcard fi">
-          <div class="rtop">
-            <div class="ava">${esc((rv.display||'م').charAt(0))}</div>
-            <div><div class="rname">${esc(rv.display)}</div><div class="rentity">🏷️ مساهم</div></div>
-          </div>
-          <div class="rstars">
-            ${'★'.repeat(rv.stars).split('').map(()=>'<span class="f">★</span>').join('')}
-            ${'★'.repeat(5-rv.stars).split('').map(()=>'<span style="color:rgba(255,255,255,.15)">★</span>').join('')}
-          </div>
+          <div class="rtop"><div class="ava">${esc(rv.display.charAt(0))}</div><div><div class="rname">${esc(rv.display)}</div><div class="rentity">🏷️ مساهم</div></div></div>
+          <div class="rstars">${'<span class="f">★</span>'.repeat(rv.stars)}</div>
           <p class="rtext">${esc(rv.comment)}</p>
           <div class="rmeta"><span>🕐 ${esc(rv.ts)}</span><span class="vbadge">✓ موثَّق</span></div>
         </div>`).join('');
-      rg.querySelectorAll('.fi').forEach(el=>io.observe(el));
-    } else {
-      rg.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:40px;color:rgba(255,255,255,.3)">لا توجد تقييمات بعد</div>';
     }
 
-    // Gallery images — convert to direct links
-    if(images&&images.length){
-      const gg=document.getElementById('galleryGrid');
-      const list=images.slice(0,5);
-      const placeholders=['gph1','gph2','gph3','gph4','gph5'];
-      gg.innerHTML=list.map((url,i)=>`
-        <div class="gi${i===0?' fi':''}">
-          <img src="${esc(directUrl(url))}" loading="lazy"
-            onerror="this.parentElement.innerHTML='<div class=\\'gph ${placeholders[i]}\\'><span class=\\'gi-icon\\'>📸</span><span class=\\'gi-lbl\\'>توثيق</span></div>'"
-            alt="توثيق توصيل">
-          <div class="gov"><span>📸 توثيق مندوب</span></div>
-        </div>`).join('');
+    if(d.images && d.images.length){
+        const gg=document.getElementById('galleryGrid');
+        gg.innerHTML=d.images.slice(0,5).map(url=>`
+          <div class="gi"><img src="${esc(url)}" loading="lazy"><div class="gov"><span>📸 توثيق مندوب</span></div></div>
+        `).join('');
     }
-
+    document.querySelectorAll('.fi').forEach(el=>io.observe(el));
   }catch(err){ console.warn('loadPublicData:', err.message); }
 }
 
 // ════════════════════════════════════════════
-//  INIT FORM — checks token from URL ?id=xxx
+//  INIT FORM (تعديل جوهري للتحقق من id و type)
 // ════════════════════════════════════════════
 async function initForm(){
-  const params  = new URLSearchParams(window.location.search);
+  const params = new URLSearchParams(window.location.search);
   const orderId = params.get('id');
+  const userType = params.get('type'); // سحب النوع من الرابط
 
-  // No token → just show public page, hide form title
-  if(!orderId){
+  if(!orderId || !userType){
     document.getElementById('formTitle').textContent='أضف تقييمك';
     return;
   }
@@ -583,12 +561,11 @@ async function initForm(){
   document.getElementById('formTitle').textContent='جاري التحقق من الرابط…';
 
   try{
-    const r=await fetch(`${GAS_URL}?action=validateToken&id=${encodeURIComponent(orderId)}`);
+    // إرسال الـ id والـ type معاً للسكربت
+    const r=await fetch(`${GAS_URL}?action=validateToken&id=${encodeURIComponent(orderId)}&type=${encodeURIComponent(userType)}`);
     const d=await r.json();
 
-    // ── Token used or invalid ──
     if(!d.valid){
-      // Special case: Customer tried before delivery
       if(d.reason==='not_delivered_yet'){
         document.getElementById('alertNotYet').style.display='block';
         document.getElementById('formTitle').textContent='التوصيل لم يكتمل بعد';
@@ -596,115 +573,67 @@ async function initForm(){
         document.getElementById('alertInvalid').style.display='block';
         document.getElementById('formTitle').textContent='رابط غير صالح';
       }
-      scrollTo('formSection');
       return;
     }
 
-    // ── Valid Driver ──
+    window._rawId = orderId;
     if(d.entryType==='Driver'){
-      window._orderId='Driver:'+orderId;
-      window._rawId=orderId;
       document.getElementById('driverForm').style.display='block';
       document.getElementById('formTitle').textContent='توثيق التوصيل — '+d.mosqueName;
-    }
-
-    // ── Valid Customer ──
-    if(d.entryType==='Customer'){
-      window._orderId='Customer:'+orderId;
-      window._rawId=orderId;
+    } else {
       document.getElementById('customerForm').style.display='block';
       document.getElementById('formTitle').textContent='تقييم خدمة مزن — '+d.mosqueName;
     }
-
     scrollTo('formSection');
 
   }catch(err){
-    document.getElementById('alertInvalid').style.display='block';
     document.getElementById('formTitle').textContent='خطأ في الاتصال';
   }
 }
 
 // ════════════════════════════════════════════
-//  SUBMIT DRIVER
-//  action=submitDelivery, displayName, comment, imageBase64
+//  إرسال البيانات (POST)
 // ════════════════════════════════════════════
 async function submitDriver(){
-  const driverName = document.getElementById('dName').value.trim();
-  const note       = document.getElementById('dNote').value.trim();
-
-  if(!driverName){ toast('يرجى إدخال اسم المورد / المندوب',true); return; }
-  if(!_b64){ toast('الصورة إجبارية — انتظر اكتمال الضغط',true); return; }
+  const name = document.getElementById('dName').value.trim();
+  if(!name || !_b64) { toast('يرجى إكمال البيانات والصورة', true); return; }
 
   const btn=document.getElementById('dBtn'); btn.disabled=true;
   document.getElementById('dTxt').innerHTML='<span class="spin"></span> جاري الرفع…';
 
-  try{
-    const fd=new FormData();
-    fd.append('action',      'submitDelivery');
-    fd.append('orderId',     window._rawId);
-    fd.append('displayName', driverName);    // اسم المورد → Display_Name
-    fd.append('comment',     note||'تم التوصيل');
-    fd.append('imageBase64', _b64);          // imageBase64
-    fd.append('imageMime',   _mime);
-
-    const r=await fetch(GAS_URL,{method:'POST',body:fd});
+  try {
+    const url = `${GAS_URL}?action=submitDelivery&orderId=${window._rawId}&displayName=${encodeURIComponent(name)}&comment=${encodeURIComponent(document.getElementById('dNote').value)}&imageMime=${_mime}`;
+    const r=await fetch(url, { method:'POST', body:_b64 });
     const d=await r.json();
-
     if(d.success){
-      document.getElementById('dBtn').style.display='none';
-      document.getElementById('dSuccess').style.display='block';
-      toast('✅ تم التوثيق وتحديث الحالة إلى Delivered!');
-      setTimeout(loadPublicData,2000);
-    } else { throw new Error(d.error||'فشل الإرسال'); }
-  }catch(err){
-    toast('⚠️ '+err.message,true);
-    btn.disabled=false;
-    document.getElementById('dTxt').textContent='إرسال التوثيق';
-  }
+      document.getElementById('driverForm').innerHTML = document.getElementById('dSuccess').innerHTML;
+      toast('✅ تم التوثيق بنجاح');
+      loadPublicData();
+    } else throw new Error(d.error);
+  } catch(err){ toast(err.message, true); btn.disabled=false; }
 }
 
-// ════════════════════════════════════════════
-//  SUBMIT CUSTOMER
-//  action=submitRating, displayName, rating, comment
-// ════════════════════════════════════════════
 async function submitCustomer(){
-  const displayName = document.getElementById('cName').value.trim()||'مساهم فاعل';
-  const comment     = document.getElementById('cComment').value.trim();
-  const starInput   = document.querySelector('input[name="stars"]:checked');
+  const name = document.getElementById('cName').value.trim() || 'مساهم فاعل';
+  const comment = document.getElementById('cComment').value.trim();
+  const rating = document.querySelector('input[name="stars"]:checked')?.value;
 
-  if(!comment){ toast('يرجى كتابة تعليق',true); return; }
-  if(!starInput){ toast('يرجى اختيار تقييم بالنجوم',true); return; }
+  if(!comment || !rating){ toast('يرجى تحديد التقييم وكتابة تعليق', true); return; }
 
   const btn=document.getElementById('cBtn'); btn.disabled=true;
-  document.getElementById('cTxt').innerHTML='<span class="spin"></span> جاري الإرسال…';
-
-  try{
-    const fd=new FormData();
-    fd.append('action',      'submitRating');
-    fd.append('orderId',     window._rawId);
-    fd.append('displayName', displayName);     // displayName
-    fd.append('rating',      starInput.value); // rating
-    fd.append('comment',     comment);
-
-    const r=await fetch(GAS_URL,{method:'POST',body:fd});
+  try {
+    const url = `${GAS_URL}?action=submitRating&orderId=${window._rawId}&displayName=${encodeURIComponent(name)}&rating=${rating}&comment=${encodeURIComponent(comment)}`;
+    const r=await fetch(url, { method:'POST' });
     const d=await r.json();
-
     if(d.success){
-      document.getElementById('cBtn').style.display='none';
-      document.getElementById('cSuccess').style.display='block';
-      toast('✅ تم إرسال تقييمك بنجاح!');
-      setTimeout(loadPublicData,2000);
-    } else { throw new Error(d.error||'فشل الإرسال'); }
-  }catch(err){
-    toast('⚠️ '+err.message,true);
-    btn.disabled=false;
-    document.getElementById('cTxt').textContent='إرسال التقييم';
-  }
+      document.getElementById('customerForm').innerHTML = document.getElementById('cSuccess').innerHTML;
+      toast('✅ شكراً لتقييمك');
+      loadPublicData();
+    } else throw new Error(d.error);
+  } catch(err){ toast(err.message, true); btn.disabled=false; }
 }
 
-// ── INIT ──
-loadPublicData();
-initForm();
+window.onload = () => { loadPublicData(); initForm(); };
 </script>
 </body>
 </html>
