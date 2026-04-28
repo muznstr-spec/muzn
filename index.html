@@ -501,32 +501,32 @@ function compressImage(input){
 //  LOAD PUBLIC DATA
 // ════════════════════════════════════════════
 async function loadPublicData(){
-  try{
-    const r=await fetch(GAS_URL+'?action=getPublicData');
-    const d=await r.json();
+  try {
+    const r = await fetch(GAS_URL + '?action=getPublicData');
+    const d = await r.json();
     if(d.error) throw new Error(d.error);
 
-    countTo('sMosques', d.stats.mosques||0);
-    countTo('sBoxes', d.stats.boxes||0);
-    countTo('sBottles', d.stats.bottles||0);
-    document.getElementById('sRating').textContent = d.stats.rating > 0 ? d.stats.rating.toFixed(1)+' ★' : '—';
+    countTo('sMosques', d.stats.mosques || 0);
+    countTo('sBoxes', d.stats.boxes || 0);
+    countTo('sBottles', d.stats.bottles || 0);
+    document.getElementById('sRating').textContent = d.stats.rating > 0 ? d.stats.rating.toFixed(1) + ' ★' : '—';
 
-    const mg=document.getElementById('mosqueGrid');
+    const mg = document.getElementById('mosqueGrid');
     if(d.mosques && d.mosques.length){
-      mg.innerHTML=d.mosques.map(m=>`
+      mg.innerHTML = d.mosques.map(m => `
         <div class="mcard fi">
           <div class="mn">🕌 ${esc(m.name)}</div>
           <div class="md">📍 ${esc(m.district)}</div>
           <div class="mb">
             <div class="chip">📦 <b>${m.boxes.toLocaleString('ar-SA')}</b> كرتون</div>
-            <div class="chip">💧 <b>${(m.boxes*40).toLocaleString('ar-SA')}</b> عبوة</div>
+            <div class="chip">💧 <b>${(m.boxes * 40).toLocaleString('ar-SA')}</b> عبوة</div>
           </div>
         </div>`).join('');
     }
 
-    const rg=document.getElementById('reviewsGrid');
+    const rg = document.getElementById('reviewsGrid');
     if(d.reviews && d.reviews.length){
-      rg.innerHTML=d.reviews.map(rv=>`
+      rg.innerHTML = d.reviews.map(rv => `
         <div class="rcard fi">
           <div class="rtop"><div class="ava">${esc(rv.display.charAt(0))}</div><div><div class="rname">${esc(rv.display)}</div><div class="rentity">🏷️ مساهم</div></div></div>
           <div class="rstars">${'<span class="f">★</span>'.repeat(rv.stars)}</div>
@@ -535,10 +535,18 @@ async function loadPublicData(){
         </div>`).join('');
     }
 
-if(d.images&&d.images.length){const gg=document.getElementById('galleryGrid');gg.innerHTML=d.images.slice(0,5).map(url=>`<div class="gi"><img src="${directUrl(url)}" loading="lazy" onerror="this.src='https://placehold.co/400x300/04102a/FFFFFF?text=Muzn'"><div class="gov"><span>📸 توثيق ميداني</span></div></div>`).join('');}
+    if(d.images && d.images.length){
+      const gg = document.getElementById('galleryGrid');
+      gg.innerHTML = d.images.slice(0, 5).map(url => `
+        <div class="gi"><img src="${directUrl(url)}" loading="lazy" onerror="this.src='https://placehold.co/400x300/04102a/FFFFFF?text=Muzn'"><div class="gov"><span>📸 توثيق ميداني</span></div></div>`).join('');
     }
-    document.querySelectorAll('.fi').forEach(el=>io.observe(el));
-  }catch(err){ console.warn('loadPublicData:', err.message); }
+    
+    // تأكد أن هذا السطر داخل الـ try أو بعد الـ catch تماماً
+    document.querySelectorAll('.fi').forEach(el => io.observe(el));
+
+  } catch(err) { 
+    console.warn('loadPublicData:', err.message); 
+  }
 }
 
 // ════════════════════════════════════════════
