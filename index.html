@@ -295,11 +295,6 @@ footer{border-top:1px solid rgba(255,255,255,.06);padding:24px 0;text-align:cent
 <div class="div"></div>
 
 <!-- REVIEWS -->
-  <section class="wrap" style="margin-top: 50px;">
-  <h2 style="text-align:center; margin-bottom:25px;">آخر عمليات التوثيق</h2>
-  <div class="mgrid" id="deliveryLog">
-     </div>
-</section>
 <section class="reviews">
   <div class="wrap">
     <div class="sh fi">
@@ -506,66 +501,55 @@ function compressImage(input){
 // ════════════════════════════════════════════
 //  LOAD PUBLIC DATA
 // ════════════════════════════════════════════
-async function loadPublicData() {
+async function loadPublicData(){
   try {
-    const d = await safeFetch(GAS_URL + '?action=getPublicData');
-    
-    // تأكد أن البيانات موجودة فعلاً قبل البدء
-    if (!d || !d.reviews) return;
+    const r = await fetch(GAS_URL + '?action=getPublicData');
+    const d = await r.json();
+    if(d.error) throw new Error(d.error);
 
-    // --- الجزء الأول: عرض توثيق المناديب ---
-    const deliveryLog = document.getElementById('deliveryLog');
-    if (deliveryLog) {
-      const driverEntries = d.reviews.filter(r => !r.rating || parseInt(r.rating) == 0);
-      
-      deliveryLog.innerHTML = driverEntries.map(r => `
-        <div class="mcard" style="border-right: 4px solid var(--success); margin-bottom:10px;">
-          <div style="font-size: 12px; color: var(--aqua-lt); margin-bottom: 5px;">✅ تم التوصيل بواسطة: ${r.name || 'مندوب مزن'}</div>
-          <div class="mn">🕌 ${r.mosqueName || 'جامع'}</div>
-          <div class="chip">📦 تم إيصال ${r.boxes || 0} كرتون</div>
-          ${r.imageUrl ? `<img src="${r.imageUrl}" style="width:100%; border-radius:10px; margin-top:10px; border:1px solid var(--glass-b);">` : ''}
-        </div>
-      `).join('');
-    }
+    countTo('sMosques', d.stats.mosques || 0);
+    countTo('sBoxes', d.stats.boxes || 0);
+    countTo('sBottles', d.stats.bottles || 0);
+    document.getElementById('sRating').textContent = d.stats.rating > 0 ? d.stats.rating.toFixed(1) + ' ★' : '—';
 
-    // --- الجزء الثاني: عرض تعليقات العملاء ---
-    const revGrid = document.getElementById('reviewsGrid');
-    if (revGrid) {
-      const customerReviews = d.reviews.filter(r => parseInt(r.rating) > 0);
-      
-      revGrid.innerHTML = customerReviews.map(r => {
-        // حماية ضد التعليق: نضمن أن الرقم بين 0 و 5 دائماً
-        const rate = Math.min(Math.max(parseInt(r.rating) || 0, 0), 5);
-        return `
-          <div class="rcard">
-            <div class="rtop">
-              <div class="ava">${(r.name || 'م')[0]}</div>
-              <div>
-                <div class="rname">${r.name || 'مساهم'}</div>
-                <div class="rentity">مساهم في مزن</div>
-              </div>
-            </div>
-            <div class="rstars">${'★'.repeat(rate)}${'☆'.repeat(5 - rate)}</div>
-            <div class="rtext">${r.comment || ''}</div>
+    const mg = document.getElementById('mosqueGrid');
+    if(d.mosques && d.mosques.length){
+      mg.innerHTML = d.mosques.map(m => `
+        <div class="mcard fi">
+          <div class="mn">🕌 ${esc(m.name)}</div>
+          <div class="md">📍 ${esc(m.district)}</div>
+          <div class="mb">
+            <div class="chip">📦 <b>${m.boxes.toLocaleString('ar-SA')}</b> كرتون</div>
+            <div class="chip">💧 <b>${(m.boxes * 40).toLocaleString('ar-SA')}</b> عبوة</div>
           </div>
-        `;
-      }).join('');
-    }
-    
-    // تحديث الأرقام العلوية (Stats) إذا كانت موجودة في الرد
-    if (d.stats) {
-        if(document.getElementById('sMosques')) document.getElementById('sMosques').textContent = d.stats.mosques || 0;
-        if(document.getElementById('sBoxes')) document.getElementById('sBoxes').textContent = d.stats.boxes || 0;
-        if(document.getElementById('sRating')) document.getElementById('sRating').textContent = (d.stats.rating || 0).toFixed(1) + ' ★';
+        </div>`).join('');
     }
 
-  } catch (e) { 
-    console.error("Error splitting reviews:", e);
-    // إذا حدث خطأ، أزل علامة التحميل (Spinner)
-    const spins = document.querySelectorAll('.spin');
-    spins.forEach(s => s.style.display = 'none');
+    const rg = document.getElementById('reviewsGrid');
+    if(d.reviews && d.reviews.length){
+      rg.innerHTML = d.reviews.map(rv => `
+        <div class="rcard fi">
+          <div class="rtop"><div class="ava">${esc(rv.display.charAt(0))}</div><div><div class="rname">${esc(rv.display)}</div><div class="rentity">🏷️ مساهم</div></div></div>
+          <div class="rstars">${'<span class="f">★</span>'.repeat(rv.stars)}</div>
+          <p class="rtext">${esc(rv.comment)}</p>
+          <div class="rmeta"><span>🕐 ${esc(rv.ts)}</span><span class="vbadge">✓ موثَّق</span></div>
+        </div>`).join('');
+    }
+
+    if(d.images && d.images.length){
+      const gg = document.getElementById('galleryGrid');
+      gg.innerHTML = d.images.slice(0, 5).map(url => `
+        <div class="gi"><img src="${directUrl(url)}" loading="lazy" onerror="this.src='https://placehold.co/400x300/04102a/FFFFFF?text=Muzn'"><div class="gov"><span>📸 توثيق ميداني</span></div></div>`).join('');
+    }
+    
+    // تأكد أن هذا السطر داخل الـ try أو بعد الـ catch تماماً
+    document.querySelectorAll('.fi').forEach(el => io.observe(el));
+
+  } catch(err) { 
+    console.warn('loadPublicData:', err.message); 
   }
 }
+
 // ════════════════════════════════════════════
 //  INIT FORM (تعديل جوهري للتحقق من id و type)
 // ════════════════════════════════════════════
