@@ -46,36 +46,38 @@ header{position:sticky;top:0;z-index:200;backdrop-filter:blur(22px);
 .hero h1 span{background:linear-gradient(135deg,var(--sky),var(--aqua-lt));-webkit-background-clip:text;-webkit-text-fill-color:transparent;display:block;}
 
 /* STATS */
-.sgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin-bottom:40px;}
+.sgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin:40px 0;}
 .scard{background:var(--glass);border:1px solid var(--glass-b);border-radius:20px;padding:26px 14px;text-align:center;backdrop-filter:blur(10px);}
-.scard .num{font-size:32px;font-weight:900;color:var(--aqua-lt);margin-bottom:4px;}
-.scard .lbl{font-size:11.5px;color:rgba(255,255,255,.46);}
+.scard .num{font-size:32px;font-weight:900;background:linear-gradient(135deg,#fff,var(--aqua-lt));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.scard .lbl{font-size:11.5px;color:rgba(255,255,255,.46);margin-top:5px;}
 
 /* MOSQUE CARDS */
-.mgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px;}
-.mcard{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:18px;padding:20px;}
+.mgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px;padding-bottom:40px;}
+.mcard{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:18px;padding:20px;transition:0.3s;}
+.mcard:hover{border-color:var(--sky);transform:translateY(-3px);}
 .mcard .mn{font-size:14.5px;font-weight:700;margin-bottom:8px;}
-.mcard .chip{background:rgba(0,184,240,.1);border:1px solid rgba(0,184,240,.2);border-radius:9px;padding:5px 10px;font-size:12px;display:inline-block;}
+.chip{background:rgba(0,184,240,.1);border:1px solid rgba(0,184,240,.2);border-radius:9px;padding:5px 12px;font-size:12px;color:var(--aqua-lt);}
 
-/* FORM SECTION */
-.formsec{padding:60px 0 80px;}
-.fcard{background:linear-gradient(135deg,rgba(26,63,168,.2),rgba(0,184,240,.05));border:1px solid rgba(58,140,232,.18);border-radius:24px;padding:40px 36px;max-width:620px;margin:0 auto;backdrop-filter:blur(12px);}
-.fg{margin-bottom:16px;}
-.fl{display:block;font-size:12.5px;font-weight:600;margin-bottom:6px;color:rgba(255,255,255,.8);}
-.fi-inp,.fi-ta{width:100%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:11px;padding:12px 14px;color:#fff;font-family:inherit;}
+/* FORMS */
+.formsec{padding:60px 0;border-top:1px solid var(--glass-b);}
+.fcard{background:rgba(255,255,255,.03);border:1px solid var(--glass-b);border-radius:24px;padding:40px;max-width:600px;margin:0 auto;backdrop-filter:blur(10px);}
+.fg{margin-bottom:20px;}
+.fl{display:block;font-size:13px;margin-bottom:8px;color:rgba(255,255,255,0.7);}
+.fi-inp, .fi-ta{width:100%;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:14px;color:#fff;font-family:inherit;outline:none;}
+.fi-inp:focus{border-color:var(--sky);}
 
 /* Stars */
-.sw{display:flex;gap:7px;flex-direction:row-reverse;justify-content:flex-end;}
+.sw{display:flex;gap:8px;flex-direction:row-reverse;justify-content:flex-end;}
 .sw input{display:none;}
-.sw label{font-size:28px;color:rgba(255,255,255,.17);cursor:pointer;}
+.sw label{font-size:30px;color:rgba(255,255,255,0.1);cursor:pointer;transition:0.2s;}
 .sw input:checked ~ label, .sw label:hover, .sw label:hover ~ label {color:var(--warn);}
 
-/* Button & Toast */
-.sbtn{width:100%;padding:14px;background:linear-gradient(135deg,var(--royal-mid),var(--royal-hi));border:none;border-radius:12px;color:#fff;font-weight:700;cursor:pointer;}
+/* Buttons & Alerts */
+.sbtn{width:100%;padding:16px;background:linear-gradient(135deg,var(--royal-mid),var(--royal-hi));border:none;border-radius:14px;color:#fff;font-size:16px;font-weight:800;cursor:pointer;transition:0.2s;}
 .sbtn:disabled{opacity:0.5;cursor:not-allowed;}
-.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(100px);background:#00e87a;color:#04102a;padding:12px 24px;border-radius:50px;font-weight:700;z-index:999;transition:0.4s;}
+.toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(100px);padding:15px 30px;border-radius:50px;font-weight:700;z-index:1000;transition:0.4s;white-space:nowrap;box-shadow:0 10px 30px rgba(0,0,0,0.5);}
 .toast.show{transform:translateX(-50%) translateY(0);}
-#preview{margin-top:10px;border-radius:10px;max-width:100%;display:none;}
+#preview{margin-top:15px;width:100%;border-radius:12px;display:none;border:1px solid var(--glass-b);}
 
 @media(max-width:768px){ .sgrid{grid-template-columns:repeat(2,1fr);} }
 </style>
@@ -85,52 +87,44 @@ header{position:sticky;top:0;z-index:200;backdrop-filter:blur(22px);
 <div class="bg"></div>
 
 <header>
-  <div class="hdr">
+  <div class="hdr wrap">
     <div class="logo">
-      <svg viewBox="0 0 60 75" fill="none">
-        <path d="M30 3C30 3 5 34 5 48c0 14 11.5 24 25 24s25-10 25-24C55 34 30 3 30 3z" fill="var(--aqua-lt)"/>
-      </svg>
-      <div>
-        <div class="logo-name">مزن</div>
-        <div class="logo-tag">أثر يروي بعطائكم</div>
-      </div>
+      <svg viewBox="0 0 60 75" fill="none"><path d="M30 3C30 3 5 34 5 48c0 14 11.5 24 25 24s25-10 25-24C55 34 30 3 30 3z" fill="var(--aqua-lt)"/></svg>
+      <div><div class="logo-name">مزن</div><div class="logo-tag">أثر يروي بعطائكم</div></div>
     </div>
   </div>
 </header>
 
-<section class="hero">
-  <div class="wrap">
-    <h1>الثقة تُبنى<span>بالشفافية</span></h1>
-    <div class="sgrid">
-      <div class="scard"><div class="num" id="sMosques">0</div><div class="lbl">مسجد</div></div>
-      <div class="scard"><div class="num" id="sBoxes">0</div><div class="lbl">كرتون</div></div>
-      <div class="scard"><div class="num" id="sRating">0</div><div class="lbl">التقييم</div></div>
-    </div>
+<section class="hero wrap">
+  <h1>الثقة تُبنى<span>بالشفافية</span></h1>
+  <div class="sgrid">
+    <div class="scard"><div class="num" id="sMosques">..</div><div class="lbl">مسجد مُخدم</div></div>
+    <div class="scard"><div class="num" id="sBoxes">..</div><div class="lbl">كرتون وُزّع</div></div>
+    <div class="scard"><div class="num" id="sRating">..</div><div class="lbl">متوسط التقييم</div></div>
   </div>
 </section>
 
-<section class="mosques">
-  <div class="wrap">
-    <div class="mgrid" id="mosqueGrid"></div>
-  </div>
+<section class="wrap">
+  <div class="mgrid" id="mosqueGrid"></div>
 </section>
 
-<section class="formsec" id="formSection">
-  <div class="wrap">
-    <h2 id="formTitle" style="text-align:center; margin-bottom:20px;">جاري التحقق...</h2>
+<section class="formsec wrap">
+  <div class="fcard">
+    <h2 id="formTitle" style="text-align:center; margin-bottom:25px;">جاري التحقق...</h2>
     
-    <div class="fcard" id="driverForm" style="display:none">
-      <div class="fg"><label class="fl">اسم المندوب</label><input class="fi-inp" id="dName"></div>
+    <div id="driverForm" style="display:none">
+      <div class="fg"><label class="fl">اسم المندوب المسلم</label><input class="fi-inp" id="dName" placeholder="أدخل اسمك"></div>
       <div class="fg">
-        <label class="fl">صورة التوثيق</label>
-        <input type="file" accept="image/*" onchange="compressImage(this)">
+        <label class="fl">صورة توثيق التسليم</label>
+        <input type="file" accept="image/*" id="fileInp" onchange="compressImage(this)" style="display:none">
+        <button class="sbtn" style="background:var(--glass-b);" onclick="document.getElementById('fileInp').click()">📸 اختر صورة</button>
         <img id="preview">
       </div>
       <button class="sbtn" id="dBtn" onclick="submitDriver()">إرسال التوثيق</button>
     </div>
 
-    <div class="fcard" id="customerForm" style="display:none">
-      <div class="fg"><label class="fl">الاسم (اختياري)</label><input class="fi-inp" id="cName"></div>
+    <div id="customerForm" style="display:none">
+      <div class="fg"><label class="fl">الاسم (اختياري)</label><input class="fi-inp" id="cName" placeholder="اتركه فارغاً للمجهولية"></div>
       <div class="fg">
         <label class="fl">التقييم</label>
         <div class="sw">
@@ -141,11 +135,11 @@ header{position:sticky;top:0;z-index:200;backdrop-filter:blur(22px);
           <input type="radio" name="stars" id="s1" value="1"><label for="s1">★</label>
         </div>
       </div>
-      <div class="fg"><label class="fl">تعليقك</label><textarea class="fi-ta" id="cComment"></textarea></div>
+      <div class="fg"><label class="fl">تعليقك الصريح</label><textarea class="fi-ta" id="cComment" rows="4"></textarea></div>
       <button class="sbtn" id="cBtn" onclick="submitCustomer()">إرسال التقييم</button>
     </div>
 
-    <div id="alertInvalid" style="display:none; text-align:center; color:var(--warn);">الرابط غير صالح أو انتهت صلاحيته</div>
+    <div id="alertInvalid" style="display:none; text-align:center; color:var(--warn);">⚠️ الرابط غير صالح أو تم استخدامه مسبقاً.</div>
   </div>
 </section>
 
@@ -155,6 +149,7 @@ header{position:sticky;top:0;z-index:200;backdrop-filter:blur(22px);
 const GAS_URL = 'https://script.google.com/macros/s/AKfycbw5j3fLxgCJMgMbwmgRZDqSmLcGVJwWaUzSMuBHF2ECr01CDIxeti0I6UQRVELT4Rek/exec';
 let _b64 = '', _mime = '', _rawId = '';
 
+// حماية الاتصال (Prevent Hang)
 async function safeFetch(url, options = {}, timeout = 12000) {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeout);
@@ -165,21 +160,21 @@ async function safeFetch(url, options = {}, timeout = 12000) {
     return JSON.parse(text);
   } catch (err) {
     clearTimeout(timer);
-    throw new Error(err.name === 'AbortError' ? "انتهت المهلة" : "خطأ اتصال");
+    throw new Error(err.name === 'AbortError' ? "انتهت المهلة" : "فشل الاتصال");
   }
 }
 
-function toast(msg, err = false) {
+function toast(msg, isErr = false) {
   const t = document.getElementById('toast');
   t.textContent = msg;
-  t.style.background = err ? '#ff4d4d' : '#00e87a';
+  t.style.background = isErr ? '#ff4d4d' : '#00e87a';
+  t.style.color = isErr ? '#fff' : '#04102a';
   t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 3000);
+  setTimeout(() => t.classList.remove('show'), 3500);
 }
 
 function compressImage(input) {
-  const file = input.files[0];
-  if (!file) return;
+  const file = input.files[0]; if (!file) return;
   const reader = new FileReader();
   reader.onload = e => {
     const img = new Image();
@@ -204,62 +199,62 @@ async function loadPublicData() {
     const d = await safeFetch(GAS_URL + '?action=getPublicData');
     document.getElementById('sMosques').textContent = d.stats.mosques || 0;
     document.getElementById('sBoxes').textContent = d.stats.boxes || 0;
-    document.getElementById('sRating').textContent = (d.stats.rating || 0).toFixed(1);
-    const grid = document.getElementById('mosqueGrid');
+    document.getElementById('sRating').textContent = (d.stats.rating || 0).toFixed(1) + ' ★';
     if (d.mosques) {
-      grid.innerHTML = d.mosques.map(m => `
+      document.getElementById('mosqueGrid').innerHTML = d.mosques.map(m => `
         <div class="mcard">
           <div class="mn">🕌 ${m.name}</div>
-          <div class="chip">📦 <b>${m.boxes}</b></div>
+          <div class="chip">📦 <b>${m.boxes}</b> كرتون</div>
         </div>
       `).join('');
     }
-  } catch (e) { console.error(e); }
+  } catch (e) { console.error("Data Load Error"); }
 }
 
 async function initForm() {
   const p = new URLSearchParams(location.search);
   const id = p.get('id'), type = p.get('type');
-  if (!id || !type) { document.getElementById('formTitle').textContent = 'مرحباً بك في مزن'; return; }
+  if (!id || !type) { document.getElementById('formTitle').textContent = 'سقيا مزن'; return; }
   _rawId = id;
   try {
     const d = await safeFetch(`${GAS_URL}?action=validateToken&id=${id}&type=${type}`);
     if (d.valid) {
       document.getElementById(type === 'driver' ? 'driverForm' : 'customerForm').style.display = 'block';
-      document.getElementById('formTitle').textContent = d.mosqueName || 'توثيق الطلب';
+      document.getElementById('formTitle').textContent = d.mosqueName || 'توثيق العملية';
     } else {
       document.getElementById('alertInvalid').style.display = 'block';
+      document.getElementById('formTitle').textContent = 'تنبيه';
     }
-  } catch (e) { toast("خطأ في التحميل", true); }
+  } catch (e) { toast("خطأ في التحقق من الرابط", true); }
 }
 
 async function submitDriver() {
   const name = document.getElementById('dName').value;
-  if (!name || !_b64) return toast("أكمل البيانات", true);
-  const btn = document.getElementById('dBtn'); btn.disabled = true;
+  if (!name || !_b64) return toast("يرجى إدخال الاسم والصورة", true);
+  const btn = document.getElementById('dBtn'); btn.disabled = true; btn.textContent = "جاري الحفظ...";
   try {
     const d = await safeFetch(GAS_URL, {
       method: 'POST',
       body: JSON.stringify({ action: 'submitDelivery', orderId: _rawId, displayName: name, imageBase64: _b64, imageMime: _mime })
     });
-    if (d.success) { toast("تم بنجاح"); setTimeout(() => location.reload(), 2000); }
+    if (d.success) { toast("✅ تم الحفظ بنجاح"); setTimeout(() => location.reload(), 2000); }
     else throw new Error();
-  } catch (e) { toast("فشل الإرسال", true); btn.disabled = false; }
+  } catch (e) { toast("فشل الإرسال، حاول ثانية", true); btn.disabled = false; btn.textContent = "إرسال التوثيق"; }
 }
 
 async function submitCustomer() {
   const comment = document.getElementById('cComment').value;
   const rating = document.querySelector('input[name="stars"]:checked')?.value;
-  if (!comment || !rating) return toast("أكمل التقييم", true);
-  const btn = document.getElementById('cBtn'); btn.disabled = true;
+  if (!comment || !rating) return toast("أكمل التقييم والتعليق", true);
+  const btn = document.getElementById('cBtn'); btn.disabled = true; btn.textContent = "جاري الإرسال...";
   try {
     const d = await safeFetch(GAS_URL, {
       method: 'POST',
       body: JSON.stringify({ action: 'submitRating', orderId: _rawId, displayName: document.getElementById('cName').value || 'مساهم', rating, comment })
     });
-    if (d.success) { toast("شكراً لك"); setTimeout(() => location.reload(), 2000); }
+    if (d.success) { toast("⭐ شكراً لتقييمك"); setTimeout(() => location.reload(), 2000); }
     else throw new Error();
-  } catch (e) { toast("فشل الإرسال", true); btn.disabled = false; }
+  } catch (e) { toast("فشل الإرسال", true); btn.disabled = false; btn.textContent = "إرسال التقييم"; }
 }
 
 window.onload = () => { loadPublicData(); initForm(); };
