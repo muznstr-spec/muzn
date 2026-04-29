@@ -28,11 +28,6 @@ body{font-family:'Tajawal',sans-serif;background:var(--ink);color:#fff;direction
 .bg{position:fixed;inset:0;z-index:0;
   background:radial-gradient(ellipse at 10% 20%,rgba(26,63,168,.4) 0%,transparent 52%),
              radial-gradient(ellipse at 90% 80%,rgba(0,184,240,.1) 0%,transparent 48%),var(--ink);}
-.drops{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;}
-.drop{position:absolute;border-radius:50% 50% 50% 50%/60% 60% 40% 40%;
-  background:linear-gradient(135deg,rgba(58,140,232,.1),rgba(0,184,240,.04));
-  border:1px solid rgba(58,140,232,.07);animation:rise linear infinite;}
-@keyframes rise{0%{transform:translateY(110vh) scale(.7);opacity:0}10%{opacity:1}90%{opacity:.4}100%{transform:translateY(-10vh) scale(1.1);opacity:0}}
 
 .wrap{max-width:1080px;margin:0 auto;padding:0 20px;position:relative;z-index:1;}
 
@@ -44,342 +39,100 @@ header{position:sticky;top:0;z-index:200;backdrop-filter:blur(22px);
 .logo svg{width:42px;height:52px;filter:drop-shadow(0 2px 12px rgba(0,184,240,.4));}
 .logo-name{font-size:22px;font-weight:900;background:linear-gradient(135deg,#fff 20%,var(--aqua-lt));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
 .logo-tag{font-size:10px;color:var(--sky-lt);opacity:.75;}
-.pill{display:flex;align-items:center;gap:7px;background:rgba(0,184,240,.1);border:1px solid rgba(0,184,240,.22);border-radius:50px;padding:6px 15px;font-size:12px;color:var(--aqua);font-weight:600;}
-.dot{width:7px;height:7px;background:var(--success);border-radius:50%;animation:pulse 1.5s ease-in-out infinite;}
-@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(0,232,122,.6)}50%{box-shadow:0 0 0 6px rgba(0,232,122,0)}}
 
 /* HERO */
 .hero{padding:65px 0 50px;text-align:center;position:relative;z-index:1;}
-.eyebrow{display:inline-flex;align-items:center;gap:7px;background:rgba(58,140,232,.1);border:1px solid rgba(58,140,232,.2);border-radius:50px;padding:5px 17px;font-size:12.5px;color:var(--sky-lt);margin-bottom:22px;}
 .hero h1{font-size:clamp(30px,6vw,60px);font-weight:900;line-height:1.15;margin-bottom:14px;}
 .hero h1 span{background:linear-gradient(135deg,var(--sky),var(--aqua-lt));-webkit-background-clip:text;-webkit-text-fill-color:transparent;display:block;}
-.hero p{font-size:16px;color:rgba(255,255,255,.6);max-width:480px;margin:0 auto 30px;line-height:1.75;}
-.cta-btn{display:inline-flex;align-items:center;gap:9px;background:linear-gradient(135deg,var(--royal-mid),var(--royal-hi));color:#fff;padding:14px 32px;border-radius:50px;font-size:15px;font-weight:700;border:none;cursor:pointer;box-shadow:0 8px 26px rgba(30,86,208,.45);transition:transform .2s,box-shadow .2s;font-family:'Tajawal',sans-serif;}
-.cta-btn:hover{transform:translateY(-2px);box-shadow:0 12px 34px rgba(30,86,208,.6);}
 
-/* STATS — 4 cards */
-.stats{padding:0 0 60px;position:relative;z-index:1;}
-.sgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;}
-.scard{background:var(--glass);border:1px solid var(--glass-b);border-radius:20px;padding:26px 14px;text-align:center;backdrop-filter:blur(10px);transition:transform .3s,border-color .3s;position:relative;overflow:hidden;}
-.scard::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:55%;height:1px;background:linear-gradient(90deg,transparent,var(--aqua),transparent);}
-.scard:hover{transform:translateY(-3px);border-color:rgba(58,140,232,.35);}
-.scard .ico{font-size:24px;display:block;margin-bottom:8px;}
-.scard .num{font-size:36px;font-weight:900;background:linear-gradient(135deg,#fff,var(--aqua-lt));-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1;margin-bottom:4px;}
-.scard .lbl{font-size:11.5px;color:rgba(255,255,255,.46);font-weight:500;}
-
-/* DIVIDER */
-.div{height:1px;background:linear-gradient(90deg,transparent,rgba(58,140,232,.17),transparent);margin:0 36px;position:relative;z-index:1;}
-
-/* SECTION HEADER */
-.sh{text-align:center;margin-bottom:36px;}
-.sh .tag{display:inline-block;background:rgba(58,140,232,.11);border:1px solid rgba(58,140,232,.23);border-radius:50px;padding:4px 14px;font-size:12px;color:var(--sky);margin-bottom:10px;font-weight:600;}
-.sh h2{font-size:clamp(20px,4vw,32px);font-weight:800;margin-bottom:8px;}
-.sh p{font-size:14px;color:rgba(255,255,255,.45);}
-
-/* FADE IN */
-.fi{opacity:0;transform:translateY(24px);transition:opacity .7s,transform .7s;}
-.fi.vis{opacity:1;transform:translateY(0);}
-@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+/* STATS */
+.sgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin-bottom:40px;}
+.scard{background:var(--glass);border:1px solid var(--glass-b);border-radius:20px;padding:26px 14px;text-align:center;backdrop-filter:blur(10px);}
+.scard .num{font-size:32px;font-weight:900;color:var(--aqua-lt);margin-bottom:4px;}
+.scard .lbl{font-size:11.5px;color:rgba(255,255,255,.46);}
 
 /* MOSQUE CARDS */
-.mosques{padding:60px 0;position:relative;z-index:1;}
 .mgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px;}
-.mcard{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:18px;padding:20px;transition:all .3s;position:relative;overflow:hidden;}
-.mcard::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--royal-mid),var(--aqua));transform:scaleX(0);transform-origin:right;transition:.3s;}
-.mcard:hover{border-color:rgba(58,140,232,.25);transform:translateY(-3px);}
-.mcard:hover::before{transform:scaleX(1);}
-.mcard .mn{font-size:14.5px;font-weight:700;margin-bottom:3px;}
-.mcard .md{font-size:11.5px;color:var(--sky-lt);opacity:.8;margin-bottom:10px;}
-.mcard .mb{display:flex;flex-wrap:wrap;gap:6px;}
-.mcard .mb .chip{background:rgba(0,184,240,.1);border:1px solid rgba(0,184,240,.2);border-radius:9px;padding:5px 10px;font-size:12px;}
-.mcard .mb .chip b{color:var(--aqua);}
-
-/* GALLERY */
-.gallery{padding:60px 0;position:relative;z-index:1;}
-.ggrid{display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:185px 185px;gap:10px;min-height:380px;}
-.gi{border-radius:14px;overflow:hidden;position:relative;cursor:pointer;background:var(--royal);}
-.gi:first-child{grid-column:span 2;grid-row:span 2;}
-.gi img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s;}
-.gi:hover img{transform:scale(1.05);}
-.gph{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;}
-.gph1{background:linear-gradient(135deg,#0d2878,#1e56d0);}
-.gph2{background:linear-gradient(135deg,#0a2e60,#1a4fa0);}
-.gph3{background:linear-gradient(135deg,#071c50,#1040b0);}
-.gph4{background:linear-gradient(135deg,#0d2878,#0050c8);}
-.gph5{background:linear-gradient(135deg,#08182a,#0d3080);}
-.gph .gi-icon{font-size:34px;opacity:.7;}
-.gph .gi-lbl{font-size:12px;color:rgba(255,255,255,.55);}
-.gov{position:absolute;inset:0;background:rgba(4,16,42,.75);display:flex;align-items:flex-end;padding:12px;opacity:0;transition:opacity .3s;}
-.gi:hover .gov{opacity:1;}
-.gov span{font-size:12px;color:#fff;font-weight:600;}
-
-/* REVIEWS */
-.reviews{padding:60px 0;position:relative;z-index:1;}
-.rgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;}
-.rcard{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:18px;padding:20px;transition:all .3s;}
-.rcard:hover{border-color:rgba(58,140,232,.22);transform:translateY(-2px);}
-.rtop{display:flex;align-items:center;gap:11px;margin-bottom:12px;}
-.ava{width:42px;height:42px;border-radius:50%;flex-shrink:0;background:linear-gradient(135deg,var(--royal-mid),var(--aqua));display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:700;}
-.rname{font-size:14px;font-weight:700;margin-bottom:2px;}
-.rentity{font-size:11px;color:var(--sky-lt);opacity:.8;}
-.rstars{display:flex;gap:2px;margin-bottom:10px;font-size:14px;}
-.rstars .f{color:var(--warn);}
-.rtext{font-size:13px;line-height:1.75;color:rgba(255,255,255,.72);}
-.rmeta{margin-top:11px;font-size:11px;color:rgba(255,255,255,.28);display:flex;align-items:center;gap:5px;}
-.vbadge{display:inline-flex;align-items:center;gap:3px;background:rgba(0,232,122,.1);border:1px solid rgba(0,232,122,.2);border-radius:20px;padding:2px 8px;font-size:10.5px;color:var(--success);margin-right:auto;}
+.mcard{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:18px;padding:20px;}
+.mcard .mn{font-size:14.5px;font-weight:700;margin-bottom:8px;}
+.mcard .chip{background:rgba(0,184,240,.1);border:1px solid rgba(0,184,240,.2);border-radius:9px;padding:5px 10px;font-size:12px;display:inline-block;}
 
 /* FORM SECTION */
-.formsec{padding:60px 0 80px;position:relative;z-index:1;}
+.formsec{padding:60px 0 80px;}
 .fcard{background:linear-gradient(135deg,rgba(26,63,168,.2),rgba(0,184,240,.05));border:1px solid rgba(58,140,232,.18);border-radius:24px;padding:40px 36px;max-width:620px;margin:0 auto;backdrop-filter:blur(12px);}
-.fcard h3{font-size:21px;font-weight:800;margin-bottom:6px;}
-.fcard>.sub{color:rgba(255,255,255,.5);font-size:13.5px;margin-bottom:24px;line-height:1.6;}
-
-/* Alert boxes */
-.alert{border-radius:18px;padding:36px 24px;text-align:center;max-width:540px;margin:0 auto;}
-.alert-red{background:rgba(255,80,80,.08);border:1px solid rgba(255,80,80,.22);}
-.alert-yellow{background:rgba(255,193,7,.08);border:1px solid rgba(255,193,7,.22);}
-.alert .a-ico{font-size:46px;margin-bottom:14px;}
-.alert h3{font-size:19px;font-weight:700;margin-bottom:8px;}
-.alert p{font-size:13.5px;color:rgba(255,255,255,.6);line-height:1.7;}
-
-/* Form fields */
 .fg{margin-bottom:16px;}
-.fl{display:block;font-size:12.5px;font-weight:600;color:rgba(255,255,255,.76);margin-bottom:6px;}
-.fi-inp,.fi-ta{width:100%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:11px;padding:12px 14px;color:#fff;font-family:'Tajawal',sans-serif;font-size:13.5px;outline:none;transition:border-color .2s,background .2s;}
-.fi-inp:focus,.fi-ta:focus{border-color:rgba(58,140,232,.48);background:rgba(255,255,255,.09);}
-.fi-inp::placeholder,.fi-ta::placeholder{color:rgba(255,255,255,.27);}
-.fi-ta{resize:vertical;min-height:100px;}
+.fl{display:block;font-size:12.5px;font-weight:600;margin-bottom:6px;color:rgba(255,255,255,.8);}
+.fi-inp,.fi-ta{width:100%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:11px;padding:12px 14px;color:#fff;font-family:inherit;}
 
 /* Stars */
 .sw{display:flex;gap:7px;flex-direction:row-reverse;justify-content:flex-end;}
 .sw input{display:none;}
-.sw label{font-size:28px;color:rgba(255,255,255,.17);cursor:pointer;transition:color .15s,transform .15s;}
-.sw label:hover,.sw label:hover~label,.sw input:checked~label{color:var(--warn);}
-.sw label:hover{transform:scale(1.2);}
+.sw label{font-size:28px;color:rgba(255,255,255,.17);cursor:pointer;}
+.sw input:checked ~ label, .sw label:hover, .sw label:hover ~ label {color:var(--warn);}
 
-/* File upload */
-.fz{border:2px dashed rgba(58,140,232,.3);border-radius:13px;padding:20px;text-align:center;cursor:pointer;transition:border-color .2s,background .2s;background:rgba(255,255,255,.03);}
-.fz:hover{border-color:rgba(58,140,232,.6);background:rgba(58,140,232,.05);}
-.fz .fz-ico{font-size:30px;margin-bottom:5px;}
-.fz p{font-size:12.5px;color:rgba(255,255,255,.5);}
-.fz small{font-size:11px;color:rgba(255,255,255,.3);display:block;margin-top:3px;}
-.fz input{display:none;}
-#preview{margin-top:10px;border-radius:10px;max-width:100%;max-height:175px;object-fit:cover;display:none;}
-#cstat{font-size:11.5px;color:var(--aqua);margin-top:5px;text-align:center;display:none;}
-
-/* Submit button */
-.sbtn{width:100%;padding:14px;background:linear-gradient(135deg,var(--royal-mid),var(--royal-hi));border:none;border-radius:12px;color:#fff;font-family:'Tajawal',sans-serif;font-size:15px;font-weight:700;cursor:pointer;transition:all .2s;margin-top:6px;box-shadow:0 6px 20px rgba(30,86,208,.35);display:flex;align-items:center;justify-content:center;gap:8px;}
-.sbtn:hover{transform:translateY(-2px);}
-.sbtn:disabled{opacity:.5;cursor:not-allowed;transform:none;}
-
-/* Success */
-.sbox{text-align:center;padding:32px 16px;display:none;}
-.sbox .si{font-size:50px;margin-bottom:12px;}
-.sbox h3{font-size:19px;font-weight:800;margin-bottom:7px;}
-.sbox p{font-size:13.5px;color:rgba(255,255,255,.55);}
-
-/* Toast */
-.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(100px);background:linear-gradient(135deg,#00c864,#00a050);color:#fff;padding:12px 24px;border-radius:50px;font-size:13.5px;font-weight:600;z-index:999;transition:transform .4s cubic-bezier(.34,1.56,.64,1);box-shadow:0 8px 26px rgba(0,200,100,.3);white-space:nowrap;}
+/* Button & Toast */
+.sbtn{width:100%;padding:14px;background:linear-gradient(135deg,var(--royal-mid),var(--royal-hi));border:none;border-radius:12px;color:#fff;font-weight:700;cursor:pointer;}
+.sbtn:disabled{opacity:0.5;cursor:not-allowed;}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(100px);background:#00e87a;color:#04102a;padding:12px 24px;border-radius:50px;font-weight:700;z-index:999;transition:0.4s;}
 .toast.show{transform:translateX(-50%) translateY(0);}
-.toast.err{background:linear-gradient(135deg,#e84040,#c02020);}
+#preview{margin-top:10px;border-radius:10px;max-width:100%;display:none;}
 
-/* Spinner */
-.spin{width:16px;height:16px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:sp .7s linear infinite;display:inline-block;}
-@keyframes sp{to{transform:rotate(360deg)}}
-
-/* Footer */
-footer{border-top:1px solid rgba(255,255,255,.06);padding:24px 0;text-align:center;position:relative;z-index:1;}
-.flogo{font-size:17px;font-weight:900;background:linear-gradient(135deg,#fff,var(--aqua-lt));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:5px;}
-.ftag{font-size:11.5px;color:rgba(255,255,255,.27);}
-
-/* Responsive */
-@media(max-width:768px){
-  .sgrid{grid-template-columns:repeat(2,1fr);gap:9px;}
-  .scard{padding:18px 10px;}.scard .num{font-size:28px;}
-  .ggrid{grid-template-columns:repeat(2,1fr);grid-template-rows:auto;}
-  .gi:first-child{grid-column:span 2;height:190px;}
-  .mgrid,.rgrid{grid-template-columns:1fr;}
-  .fcard{padding:26px 18px;}
-}
+@media(max-width:768px){ .sgrid{grid-template-columns:repeat(2,1fr);} }
 </style>
 </head>
 <body>
 
 <div class="bg"></div>
-<div class="drops" id="dropsLayer"></div>
 
-<!-- HEADER -->
 <header>
   <div class="hdr">
     <div class="logo">
       <svg viewBox="0 0 60 75" fill="none">
-        <defs>
-          <linearGradient id="lg" x1="0" y1="0" x2="60" y2="75" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stop-color="#5adaff"/><stop offset="100%" stop-color="#1a3fa8"/>
-          </linearGradient>
-        </defs>
-        <path d="M30 3C30 3 5 34 5 48c0 14 11.5 24 25 24s25-10 25-24C55 34 30 3 30 3z" fill="url(#lg)" opacity=".92"/>
-        <path d="M30 20c0 0-16 20-16 30 0 8 7 14 16 14" stroke="rgba(255,255,255,.28)" stroke-width="2" fill="none"/>
-        <circle cx="38" cy="22" r="2" fill="rgba(255,255,255,.55)"/>
+        <path d="M30 3C30 3 5 34 5 48c0 14 11.5 24 25 24s25-10 25-24C55 34 30 3 30 3z" fill="var(--aqua-lt)"/>
       </svg>
       <div>
         <div class="logo-name">مزن</div>
         <div class="logo-tag">أثر يروي بعطائكم</div>
       </div>
     </div>
-    <div class="pill"><div class="dot"></div><span>مباشر</span></div>
   </div>
 </header>
 
-<!-- HERO -->
 <section class="hero">
   <div class="wrap">
-    <div class="eyebrow">💧 منصة التوثيق والتقييم</div>
     <h1>الثقة تُبنى<span>بالشفافية</span></h1>
-    <p>كل تقييم حقيقي من جهة مستفيدة. نُظهر كل شيء بشفافية تامة لأن خدمتنا تتحدث عن نفسها.</p>
-    <button class="cta-btn" onclick="scrollTo('formSection')">✍️ أضف تقييمك الآن</button>
-  </div>
-</section>
-
-<!-- STATS — 4 KPIs -->
-<section class="stats">
-  <div class="wrap">
     <div class="sgrid">
-      <div class="scard fi"><span class="ico">🕌</span><div class="num" id="sMosques">—</div><div class="lbl">مسجد مُخدَّم</div></div>
-      <div class="scard fi"><span class="ico">📦</span><div class="num" id="sBoxes">—</div><div class="lbl">كراتين موزَّعة</div></div>
-      <div class="scard fi"><span class="ico">💧</span><div class="num" id="sBottles">—</div><div class="lbl">إجمالي العبوات (×٤٠)</div></div>
-      <div class="scard fi"><span class="ico">⭐</span><div class="num" id="sRating">—</div><div class="lbl">متوسط التقييم</div></div>
+      <div class="scard"><div class="num" id="sMosques">0</div><div class="lbl">مسجد</div></div>
+      <div class="scard"><div class="num" id="sBoxes">0</div><div class="lbl">كرتون</div></div>
+      <div class="scard"><div class="num" id="sRating">0</div><div class="lbl">التقييم</div></div>
     </div>
   </div>
 </section>
 
-<div class="div"></div>
-
-<!-- MOSQUE CARDS -->
 <section class="mosques">
   <div class="wrap">
-    <div class="sh fi">
-      <div class="tag">🗺️ نقاط التوزيع</div>
-      <h2>المساجد المُستفيدة</h2>
-      <p>إجمالي تراكمي للكراتين والعبوات لكل مسجد</p>
-    </div>
-    <div class="mgrid fi" id="mosqueGrid">
-      <div style="grid-column:1/-1;text-align:center;padding:40px;color:rgba(255,255,255,.3)">
-        <div class="spin" style="margin:0 auto 10px;width:26px;height:26px;border-width:3px;"></div>جاري التحميل…
-      </div>
-    </div>
+    <div class="mgrid" id="mosqueGrid"></div>
   </div>
 </section>
 
-<div class="div"></div>
-
-<!-- GALLERY -->
-<section class="gallery">
-  <div class="wrap">
-    <div class="sh fi">
-      <div class="tag">📸 توثيق التوصيل</div>
-      <h2>نُوثِّق كل توصيلة</h2>
-      <p>صور حقيقية من الميدان</p>
-    </div>
-    <div class="ggrid fi" id="galleryGrid">
-      <div class="gi"><div class="gph gph1"><span class="gi-icon">🕌</span><span class="gi-lbl">مسجد الرحمة</span></div><div class="gov"><span>📍 حي النزهة</span></div></div>
-      <div class="gi"><div class="gph gph2"><span class="gi-icon">📦</span><span class="gi-lbl">تحميل العبوات</span></div><div class="gov"><span>📦 تجهيز الطلبيات</span></div></div>
-      <div class="gi"><div class="gph gph3"><span class="gi-icon">🤝</span><span class="gi-lbl">استلام رسمي</span></div><div class="gov"><span>✅ توقيع التسليم</span></div></div>
-      <div class="gi"><div class="gph gph4"><span class="gi-icon">💧</span><span class="gi-lbl">عبوات مزن</span></div><div class="gov"><span>💧 جودة عالية</span></div></div>
-      <div class="gi"><div class="gph gph5"><span class="gi-icon">🚗</span><span class="gi-lbl">أسطول مزن</span></div><div class="gov"><span>🚗 التوصيل اليومي</span></div></div>
-    </div>
-  </div>
-</section>
-
-<div class="div"></div>
-
-<!-- REVIEWS -->
-<section class="reviews">
-  <div class="wrap">
-    <div class="sh fi">
-      <div class="tag">⭐ آراء المساهمين</div>
-      <h2>ماذا يقولون عن مزن؟</h2>
-      <p>تقييمات حقيقية من الجهات المستفيدة</p>
-    </div>
-    <div class="rgrid" id="reviewsGrid">
-      <div style="grid-column:1/-1;text-align:center;padding:40px;color:rgba(255,255,255,.3)">
-        <div class="spin" style="margin:0 auto 10px;width:26px;height:26px;border-width:3px;"></div>جاري التحميل…
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="div"></div>
-
-<!-- FORM SECTION -->
 <section class="formsec" id="formSection">
   <div class="wrap">
-    <div class="sh fi">
-      <div class="tag">📝 نموذج التوثيق والتقييم</div>
-      <h2 id="formTitle">جاري التحقق…</h2>
+    <h2 id="formTitle" style="text-align:center; margin-bottom:20px;">جاري التحقق...</h2>
+    
+    <div class="fcard" id="driverForm" style="display:none">
+      <div class="fg"><label class="fl">اسم المندوب</label><input class="fi-inp" id="dName"></div>
+      <div class="fg">
+        <label class="fl">صورة التوثيق</label>
+        <input type="file" accept="image/*" onchange="compressImage(this)">
+        <img id="preview">
+      </div>
+      <button class="sbtn" id="dBtn" onclick="submitDriver()">إرسال التوثيق</button>
     </div>
 
-    <!-- رابط غير صالح / مستخدم -->
-    <div class="alert alert-red fi" id="alertInvalid" style="display:none">
-      <div class="a-ico">🔒</div>
-      <h3>رابط غير صالح</h3>
-      <p>هذا الرابط لا يحتوي على معرّف صحيح، أو تم استخدامه مسبقاً.<br>تواصل مع فريق مزن للحصول على رابطك الخاص.</p>
-    </div>
-
-    <!-- العميل حاول قبل التوصيل -->
-    <div class="alert alert-yellow fi" id="alertNotYet" style="display:none">
-      <div class="a-ico">⏳</div>
-      <h3>الطلب لا يزال قيد التوصيل</h3>
-      <p>عذراً، لم يتم توصيل طلبك بعد.<br>يمكنك التقييم بعد اكتمال التوصيل وإشعارك برابط التقييم الخاص.</p>
-    </div>
-
-    <!-- نموذج المندوب -->
-    <div class="fcard fi" id="driverForm" style="display:none">
-      <h3>📸 نموذج توثيق التوصيل</h3>
-      <p class="sub">وثّق عملية التوصيل — سيتم تحديث الحالة تلقائياً عند الإرسال.</p>
-
+    <div class="fcard" id="customerForm" style="display:none">
+      <div class="fg"><label class="fl">الاسم (اختياري)</label><input class="fi-inp" id="cName"></div>
       <div class="fg">
-        <label class="fl">اسم المورد / المندوب *</label>
-        <input class="fi-inp" id="dName" placeholder="الاسم الكامل للمندوب المُسلِّم" required>
-      </div>
-      <div class="fg">
-        <label class="fl">ملاحظات (اختياري)</label>
-        <textarea class="fi-ta" id="dNote" style="min-height:80px" placeholder="أي ملاحظات على عملية التوصيل…"></textarea>
-      </div>
-      <div class="fg">
-        <label class="fl">صورة التوثيق * (إجبارية)</label>
-        <div class="fz" onclick="document.getElementById('imgFile').click()">
-          <div class="fz-ico">📷</div>
-          <p>اضغط لاختيار صورة</p>
-          <small>ستُضغط تلقائياً إلى أقل من 300KB</small>
-          <input type="file" id="imgFile" accept="image/*" onchange="compressImage(this)">
-        </div>
-        <img id="preview" alt="معاينة">
-        <div id="cstat"></div>
-      </div>
-
-      <button class="sbtn" id="dBtn" onclick="submitDriver()">
-        <span id="dTxt">إرسال التوثيق</span>
-        <svg width="14" height="18" viewBox="0 0 60 75" fill="none"><path d="M30 3C30 3 5 34 5 48c0 14 11.5 24 25 24s25-10 25-24C55 34 30 3 30 3z" fill="rgba(255,255,255,.8)"/></svg>
-      </button>
-      <div class="sbox" id="dSuccess">
-        <div class="si">✅</div>
-        <h3>تم التوثيق بنجاح!</h3>
-        <p>تم تحديث حالة الطلب إلى "تم التوصيل" وحفظ صورة التوثيق.</p>
-      </div>
-    </div>
-
-    <!-- نموذج العميل -->
-    <div class="fcard fi" id="customerForm" style="display:none">
-      <h3>⭐ نموذج تقييم المساهم</h3>
-      <p class="sub">شاركنا تجربتك مع خدمة مزن بكل صدق وشفافية.</p>
-
-      <div class="fg">
-        <label class="fl">اسمك (اختياري)</label>
-        <input class="fi-inp" id="cName" placeholder="يمكنك الإبقاء على مجهوليتك">
-      </div>
-      <div class="fg">
-        <label class="fl">تقييمك *</label>
+        <label class="fl">التقييم</label>
         <div class="sw">
           <input type="radio" name="stars" id="s5" value="5"><label for="s5">★</label>
           <input type="radio" name="stars" id="s4" value="4"><label for="s4">★</label>
@@ -388,86 +141,42 @@ footer{border-top:1px solid rgba(255,255,255,.06);padding:24px 0;text-align:cent
           <input type="radio" name="stars" id="s1" value="1"><label for="s1">★</label>
         </div>
       </div>
-      <div class="fg">
-        <label class="fl">تعليقك *</label>
-        <textarea class="fi-ta" id="cComment" placeholder="كيف كانت تجربتك؟ جودة العبوات، الالتزام بالمواعيد، تعامل المندوب…"></textarea>
-      </div>
-
-      <button class="sbtn" id="cBtn" onclick="submitCustomer()">
-        <span id="cTxt">إرسال التقييم</span>
-        <svg width="14" height="18" viewBox="0 0 60 75" fill="none"><path d="M30 3C30 3 5 34 5 48c0 14 11.5 24 25 24s25-10 25-24C55 34 30 3 30 3z" fill="rgba(255,255,255,.8)"/></svg>
-      </button>
-      <div class="sbox" id="cSuccess">
-        <div class="si">✅</div>
-        <h3>شكراً لك!</h3>
-        <p>تم إرسال تقييمك بنجاح وسيظهر على الصفحة قريباً.</p>
-      </div>
+      <div class="fg"><label class="fl">تعليقك</label><textarea class="fi-ta" id="cComment"></textarea></div>
+      <button class="sbtn" id="cBtn" onclick="submitCustomer()">إرسال التقييم</button>
     </div>
 
+    <div id="alertInvalid" style="display:none; text-align:center; color:var(--warn);">الرابط غير صالح أو انتهت صلاحيته</div>
   </div>
 </section>
-
-<!-- FOOTER -->
-<footer>
-  <div class="flogo">مزن 💧</div>
-  <p class="ftag">نُوصِل النقاء إلى بيوت الله · جميع الحقوق محفوظة © 2025</p>
-</footer>
 
 <div class="toast" id="toast"></div>
 
 <script>
-<script>
 const GAS_URL = 'https://script.google.com/macros/s/AKfycbw5j3fLxgCJMgMbwmgRZDqSmLcGVJwWaUzSMuBHF2ECr01CDIxeti0I6UQRVELT4Rek/exec';
+let _b64 = '', _mime = '', _rawId = '';
 
-let _b64 = '';
-let _mime = '';
-let _rawId = '';
-
-// ───────────── 1. الـ Safe Fetch (طبقة الحماية) ─────────────
-async function safeFetch(url, options = {}, timeout = 10000) {
+async function safeFetch(url, options = {}, timeout = 12000) {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeout);
-
   try {
-    const response = await fetch(url, {
-      ...options,
-      signal: controller.signal
-    });
-
+    const response = await fetch(url, { ...options, signal: controller.signal });
     clearTimeout(timer);
-
-    if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
-
     const text = await response.text();
-    try {
-      return JSON.parse(text);
-    } catch (e) {
-      console.error("Raw response:", text);
-      throw new Error("استجابة غير صالحة من السيرفر (JSON Error)");
-    }
+    return JSON.parse(text);
   } catch (err) {
     clearTimeout(timer);
-    if (err.name === 'AbortError') throw new Error("انتهت مهلة الاتصال (Timeout)");
-    throw err;
+    throw new Error(err.name === 'AbortError' ? "انتهت المهلة" : "خطأ اتصال");
   }
 }
 
-// ───────────── 2. مساعدات الواجهة ─────────────
 function toast(msg, err = false) {
   const t = document.getElementById('toast');
-  if (!t) return;
   t.textContent = msg;
   t.style.background = err ? '#ff4d4d' : '#00e87a';
   t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 4000);
+  setTimeout(() => t.classList.remove('show'), 3000);
 }
 
-function safeNum(v) {
-  const n = parseFloat(v);
-  return isNaN(n) ? 0 : n;
-}
-
-// ───────────── 3. معالجة الصور ─────────────
 function compressImage(input) {
   const file = input.files[0];
   if (!file) return;
@@ -477,139 +186,83 @@ function compressImage(input) {
     img.onload = () => {
       const canvas = document.createElement('canvas');
       let w = img.width, h = img.height, MAX = 800;
-      if (w > h && w > MAX) { h = Math.round(h * MAX / w); w = MAX; }
-      else if (h > MAX) { w = Math.round(w * MAX / h); h = MAX; }
+      if (w > h && w > MAX) { h *= MAX/w; w = MAX; } else if (h > MAX) { w *= MAX/h; h = MAX; }
       canvas.width = w; canvas.height = h;
       canvas.getContext('2d').drawImage(img, 0, 0, w, h);
       const dataUrl = canvas.toDataURL('image/jpeg', 0.7);
-      _b64 = dataUrl.split(',')[1];
-      _mime = 'image/jpeg';
-      const prev = document.getElementById('preview');
-      if (prev) { prev.src = dataUrl; prev.style.display = 'block'; }
+      _b64 = dataUrl.split(',')[1]; _mime = 'image/jpeg';
+      document.getElementById('preview').src = dataUrl;
+      document.getElementById('preview').style.display = 'block';
     };
     img.src = e.target.result;
   };
   reader.readAsDataURL(file);
 }
 
-// ───────────── 4. الأكشنز الأساسية ─────────────
 async function loadPublicData() {
   try {
     const d = await safeFetch(GAS_URL + '?action=getPublicData');
-    const stats = d.stats || {};
-    document.getElementById('sMosques').textContent = safeNum(stats.mosques);
-    document.getElementById('sBoxes').textContent = safeNum(stats.boxes);
-    document.getElementById('sRating').textContent = safeNum(stats.rating).toFixed(1) + ' ★';
-
+    document.getElementById('sMosques').textContent = d.stats.mosques || 0;
+    document.getElementById('sBoxes').textContent = d.stats.boxes || 0;
+    document.getElementById('sRating').textContent = (d.stats.rating || 0).toFixed(1);
     const grid = document.getElementById('mosqueGrid');
-    if (grid && d.mosques) {
+    if (d.mosques) {
       grid.innerHTML = d.mosques.map(m => `
-        <div class="mcard fi vis">
-          <div class="mn">🕌 ${m.name || ''}</div>
-          <div class="mb"><div class="chip">📦 <b>${safeNum(m.boxes)}</b></div></div>
+        <div class="mcard">
+          <div class="mn">🕌 ${m.name}</div>
+          <div class="chip">📦 <b>${m.boxes}</b></div>
         </div>
       `).join('');
     }
-  } catch (err) {
-    console.error("Public Data Error:", err);
-  }
+  } catch (e) { console.error(e); }
 }
 
 async function initForm() {
   const p = new URLSearchParams(location.search);
   const id = p.get('id'), type = p.get('type');
-  if (!id || !type) {
-    document.getElementById('formTitle').textContent = 'مرحباً بك في مزن';
-    return;
-  }
+  if (!id || !type) { document.getElementById('formTitle').textContent = 'مرحباً بك في مزن'; return; }
   _rawId = id;
   try {
     const d = await safeFetch(`${GAS_URL}?action=validateToken&id=${id}&type=${type}`);
     if (d.valid) {
-      const formId = (type === 'driver') ? 'driverForm' : 'customerForm';
-      document.getElementById(formId).style.display = 'block';
+      document.getElementById(type === 'driver' ? 'driverForm' : 'customerForm').style.display = 'block';
       document.getElementById('formTitle').textContent = d.mosqueName || 'توثيق الطلب';
     } else {
       document.getElementById('alertInvalid').style.display = 'block';
-      document.getElementById('formTitle').textContent = 'رابط غير صالح';
     }
-  } catch (err) {
-    toast("فشل التحقق من الرابط: " + err.message, true);
-  }
+  } catch (e) { toast("خطأ في التحميل", true); }
 }
 
 async function submitDriver() {
-  const name = document.getElementById('dName').value.trim();
-  const btn = document.getElementById('dBtn');
-  if (!name || !_b64) return toast('يرجى إكمال البيانات والصورة', true);
-
-  btn.disabled = true;
-  const originalTxt = btn.textContent;
-  btn.textContent = 'جاري الإرسال...';
-
+  const name = document.getElementById('dName').value;
+  if (!name || !_b64) return toast("أكمل البيانات", true);
+  const btn = document.getElementById('dBtn'); btn.disabled = true;
   try {
     const d = await safeFetch(GAS_URL, {
       method: 'POST',
-      body: JSON.stringify({
-        action: 'submitDelivery',
-        orderId: _rawId,
-        displayName: name,
-        imageBase64: _b64,
-        imageMime: _mime
-      })
+      body: JSON.stringify({ action: 'submitDelivery', orderId: _rawId, displayName: name, imageBase64: _b64, imageMime: _mime })
     });
-    if (d.success) {
-      toast('✅ تم التوثيق بنجاح');
-      setTimeout(() => location.reload(), 2000);
-    } else throw new Error(d.error || "فشل الإرسال");
-  } catch (err) {
-    toast(err.message, true);
-    btn.disabled = false;
-    btn.textContent = originalTxt;
-  }
+    if (d.success) { toast("تم بنجاح"); setTimeout(() => location.reload(), 2000); }
+    else throw new Error();
+  } catch (e) { toast("فشل الإرسال", true); btn.disabled = false; }
 }
 
 async function submitCustomer() {
-  const comment = document.getElementById('cComment').value.trim();
+  const comment = document.getElementById('cComment').value;
   const rating = document.querySelector('input[name="stars"]:checked')?.value;
-  const btn = document.getElementById('cBtn');
-
-  if (!comment || !rating) return toast('يرجى تحديد التقييم وكتابة تعليق', true);
-
-  btn.disabled = true;
-  btn.textContent = 'جاري الإرسال...';
-
+  if (!comment || !rating) return toast("أكمل التقييم", true);
+  const btn = document.getElementById('cBtn'); btn.disabled = true;
   try {
     const d = await safeFetch(GAS_URL, {
       method: 'POST',
-      body: JSON.stringify({
-        action: 'submitRating',
-        orderId: _rawId,
-        displayName: document.getElementById('cName').value || 'مساهم',
-        rating: safeNum(rating),
-        comment: comment
-      })
+      body: JSON.stringify({ action: 'submitRating', orderId: _rawId, displayName: document.getElementById('cName').value || 'مساهم', rating, comment })
     });
-    if (d.success) {
-      toast('✅ شكراً لتقييمك');
-      setTimeout(() => location.reload(), 2000);
-    } else throw new Error(d.error || "فشل التقييم");
-  } catch (err) {
-    toast(err.message, true);
-    btn.disabled = false;
-    btn.textContent = 'إرسال التقييم';
-  }
+    if (d.success) { toast("شكراً لك"); setTimeout(() => location.reload(), 2000); }
+    else throw new Error();
+  } catch (e) { toast("فشل الإرسال", true); btn.disabled = false; }
 }
 
-window.onload = () => {
-  loadPublicData();
-  initForm();
-};
+window.onload = () => { loadPublicData(); initForm(); };
 </script>
-</script>
-  <div id="lightbox" style="display:none;position:fixed;inset:0;
-background:rgba(0,0,0,.9);z-index:999;align-items:center;justify-content:center;">
-  <img id="lightImg" style="max-width:90%;max-height:90%;border-radius:12px">
-</div>
 </body>
 </html>
