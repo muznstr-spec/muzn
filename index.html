@@ -1,3 +1,4 @@
+هذا كود HTML
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -419,7 +420,7 @@ footer{border-top:1px solid rgba(255,255,255,.06);padding:24px 0;text-align:cent
 'use strict';
 
 // ▸▸ رابط الـ Web App المحدث (Deployment ID الجديد)
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbz3ly8L0P_fRLJy6VE0Y-uDeBHmS5BjkOLlgAmmu8rpKBzTncwra8m8Qc3ja3_yEgTj/exec';
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbw5j3fLxgCJMgMbwmgRZDqSmLcGVJwWaUzSMuBHF2ECr01CDIxeti0I6UQRVELT4Rek/exec';
 
 // ── Floating drops ──
 (function(){
@@ -524,62 +525,22 @@ async function loadPublicData(){
         </div>`).join('');
     }
 
-const rg = document.getElementById('reviewsGrid');
+    const rg = document.getElementById('reviewsGrid');
+    if(d.reviews && d.reviews.length){
+      rg.innerHTML = d.reviews.map(rv => `
+        <div class="rcard fi">
+          <div class="rtop"><div class="ava">${esc(rv.display.charAt(0))}</div><div><div class="rname">${esc(rv.display)}</div><div class="rentity">🏷️ مساهم</div></div></div>
+          <div class="rstars">${'<span class="f">★</span>'.repeat(rv.stars)}</div>
+          <p class="rtext">${esc(rv.comment)}</p>
+          <div class="rmeta"><span>🕐 ${esc(rv.ts)}</span><span class="vbadge">✓ موثَّق</span></div>
+        </div>`).join('');
+    }
 
-if(d.reviews && d.reviews.length){
-
-  rg.innerHTML = d.reviews.map(rv => {
-
-    const firstLetter = rv.display ? rv.display.charAt(0) : '?';
-
-    return `
-    <div class="rcard fi">
-
-      <div class="rtop">
-        <div class="ava">${firstLetter}</div>
-        <div>
-          <div class="rname">${rv.display || 'مندوب مزن'}</div>
-          <div class="rentity">🚚 مندوب توصيل</div>
-        </div>
-      </div>
-
-      ${rv.img ? `
-        <div style="margin-bottom:10px">
-          <img src="${rv.img}" 
-               onclick="openLightbox('${esc(rv.img)}')"
-               style="width:100%;border-radius:12px;max-height:220px;object-fit:cover">
-        </div>
-      ` : ''}
-
-      <div style="background:rgba(0,184,240,.08);
-                  border:1px solid rgba(0,184,240,.2);
-                  padding:10px;border-radius:10px;
-                  font-size:13px;line-height:1.6;">
-        📦 ${rv.comment || 'تم التوصيل بنجاح'}
-      </div>
-
-      <div class="rmeta">
-        🕐 ${rv.ts || ''}
-        <span class="vbadge">✓ موثَّق</span>
-      </div>
-
-    </div>`;
-  }).join('');
-}
-
-if(d.images && d.images.length){
-
-  const gg = document.getElementById('galleryGrid');
-
-  gg.innerHTML = d.images.slice(0,6).map(url => `
-    <div class="gi">
-      <img src="${url}" 
-           onclick="openLightbox('${url}')"
-           style="width:100%;height:100%;object-fit:cover;border-radius:12px">
-      <div class="gov"><span>📸 توثيق ميداني</span></div>
-    </div>
-  `).join('');
-}
+    if(d.images && d.images.length){
+      const gg = document.getElementById('galleryGrid');
+      gg.innerHTML = d.images.slice(0, 5).map(url => `
+        <div class="gi"><img src="${directUrl(url)}" loading="lazy" onerror="this.src='https://placehold.co/400x300/04102a/FFFFFF?text=Muzn'"><div class="gov"><span>📸 توثيق ميداني</span></div></div>`).join('');
+    }
     
     // تأكد أن هذا السطر داخل الـ try أو بعد الـ catch تماماً
     document.querySelectorAll('.fi').forEach(el => io.observe(el));
@@ -642,99 +603,42 @@ async function submitDriver(){
   const name = document.getElementById('dName').value.trim();
   if(!name || !_b64) { toast('يرجى إكمال البيانات والصورة', true); return; }
 
-  const btn=document.getElementById('dBtn'); 
-  btn.disabled=true;
+  const btn=document.getElementById('dBtn'); btn.disabled=true;
   document.getElementById('dTxt').innerHTML='<span class="spin"></span> جاري الرفع…';
 
   try {
-    const payload = {
-      action: 'submitDelivery',
-      orderId: window._rawId,
-      displayName: name,
-      comment: document.getElementById('dNote').value,
-      imageBase64: _b64,
-      imageMime: _mime
-    };
-
-    const r = await fetch(GAS_URL, {
-      method:'POST',
-      body: JSON.stringify(payload)
-    });
-
+    const url = `${GAS_URL}?action=submitDelivery&orderId=${window._rawId}&displayName=${encodeURIComponent(name)}&comment=${encodeURIComponent(document.getElementById('dNote').value)}&imageMime=${_mime}`;
+    const r=await fetch(url, { method:'POST', body:_b64 });
     const d=await r.json();
-
     if(d.success){
       document.getElementById('driverForm').innerHTML = document.getElementById('dSuccess').innerHTML;
       toast('✅ تم التوثيق بنجاح');
       loadPublicData();
     } else throw new Error(d.error);
-
-  } catch(err){ 
-    toast(err.message, true); 
-    btn.disabled=false; 
-  }
+  } catch(err){ toast(err.message, true); btn.disabled=false; }
 }
 
 async function submitCustomer(){
-  const name = document.getElementById('cName').value.trim() || 'مساهم';
+  const name = document.getElementById('cName').value.trim() || 'مساهم فاعل';
   const comment = document.getElementById('cComment').value.trim();
   const rating = document.querySelector('input[name="stars"]:checked')?.value;
 
-  if(!comment || !rating){ 
-    toast('يرجى تحديد التقييم وكتابة تعليق', true); 
-    return; 
-  }
+  if(!comment || !rating){ toast('يرجى تحديد التقييم وكتابة تعليق', true); return; }
 
-  const btn=document.getElementById('cBtn'); 
-  btn.disabled=true;
-
+  const btn=document.getElementById('cBtn'); btn.disabled=true;
   try {
-    const payload = {
-      action: 'submitRating',
-      orderId: window._rawId,
-      displayName: name,
-      rating: rating,
-      comment: comment
-    };
-
-    const r = await fetch(GAS_URL, {
-      method:'POST',
-      body: JSON.stringify(payload)
-    });
-
+    const url = `${GAS_URL}?action=submitRating&orderId=${window._rawId}&displayName=${encodeURIComponent(name)}&rating=${rating}&comment=${encodeURIComponent(comment)}`;
+    const r=await fetch(url, { method:'POST' });
     const d=await r.json();
-
     if(d.success){
       document.getElementById('customerForm').innerHTML = document.getElementById('cSuccess').innerHTML;
       toast('✅ شكراً لتقييمك');
       loadPublicData();
     } else throw new Error(d.error);
+  } catch(err){ toast(err.message, true); btn.disabled=false; }
+}
 
-  } catch(err){ 
-    toast(err.message, true); 
-    btn.disabled=false; 
-  }
-}
-  function openLightbox(src){
-  const lb = document.getElementById('lightbox');
-  const img = document.getElementById('lightImg');
-  if(!lb || !img) return;
-  img.src = src;
-  lb.style.display = 'flex';
-}
 window.onload = () => { loadPublicData(); initForm(); };
-  window.addEventListener('load', function(){
-  const lb = document.getElementById('lightbox');
-  if(lb){
-    lb.onclick = function(){
-      this.style.display = 'none';
-    };
-  }
-});
 </script>
-  <div id="lightbox" style="display:none;position:fixed;inset:0;
-background:rgba(0,0,0,.9);z-index:999;align-items:center;justify-content:center;">
-  <img id="lightImg" style="max-width:90%;max-height:90%;border-radius:12px">
-</div>
 </body>
 </html>
