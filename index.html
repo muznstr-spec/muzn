@@ -465,7 +465,7 @@ footer{border-top:1px solid rgba(255,255,255,.06);padding:24px 0;text-align:cent
 <script>
 'use strict';
 
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbzCR8OJdz5achtQ0EN4AILk3oaoxSgHULMrvJd3B5eQhIMW1IR0RCkQa8YLVndjbSeH/exec';
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbyZpW9TmxXwrJmbnUgX2XdYZUPjOxm2EJ8K3ddZOx4yc0myYFT_onuKj29g9M6Vggut/exec';
 
 // ── Drops ──
 (function(){
@@ -715,19 +715,12 @@ async function submitDriver(){
 
   try{
     const payload={
-      action     :'submitDelivery',
-      orderId    :window._rawId,
-      displayName:name,
-      comment    :note||'تم التوصيل',
-      imageBase64:_b64,   // ✅ يصل كاملاً عبر JSON
-      imageMime  :_mime
+      action:'submitDelivery',orderId:window._rawId,
+      displayName:name,comment:note||'تم التوصيل',
+      imageBase64:_b64,imageMime:_mime
     };
-
-    const r=await fetch(GAS_URL,{
-      method :'POST',
-      headers:{'Content-Type':'application/json'},  // ✅ مهم جداً
-      body   :JSON.stringify(payload)
-    });
+    // بدون Content-Type — يتجنب CORS preflight الذي يعيق Apps Script
+    const r=await fetch(GAS_URL,{method:'POST',body:JSON.stringify(payload)});
     const d=await r.json();
 
     if(d.success){
