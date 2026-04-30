@@ -111,24 +111,42 @@ header{position:sticky;top:0;z-index:200;backdrop-filter:blur(22px);background:r
 .modal-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;}
 
 /* ══════════════════════════════════
-   GALLERY — vertical feed, Google Maps style
+   GALLERY — بطاقات عمودية واضحة
 ══════════════════════════════════ */
 .gallery{padding:60px 0;position:relative;z-index:1;}
-.gallery-feed{display:flex;flex-direction:column;gap:16px;}
+.gallery-feed{display:flex;flex-direction:column;gap:20px;}
 .gitem{
-  border-radius:18px;overflow:hidden;position:relative;
-  background:var(--glass);border:1px solid var(--glass-b);
+  border-radius:20px;overflow:hidden;
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);
   transition:transform .3s,border-color .3s;
 }
-.gitem:hover{transform:translateY(-2px);border-color:rgba(58,140,232,.3);}
-.gitem img{width:100%;display:block;object-fit:cover;max-height:340px;}
-.gitem-info{
-  padding:12px 16px;display:flex;align-items:center;justify-content:space-between;
+.gitem:hover{transform:translateY(-3px);border-color:rgba(58,140,232,.3);}
+.gitem img{
+  width:100%;display:block;object-fit:cover;
+  max-height:420px;min-height:220px;
+  background:var(--royal-deep);
 }
-.gitem-info .gi-date{font-size:12px;color:rgba(255,255,255,.4);}
-.gitem-info .gi-label{font-size:13px;font-weight:600;color:var(--sky-lt);}
+.gitem-body{padding:18px 20px;}
+.gitem-driver{
+  display:flex;align-items:center;gap:10px;margin-bottom:10px;
+}
+.gitem-avatar{
+  width:38px;height:38px;border-radius:50%;flex-shrink:0;
+  background:linear-gradient(135deg,var(--royal-mid),var(--aqua));
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;font-weight:800;
+}
+.gitem-name{font-size:14px;font-weight:700;color:#fff;}
+.gitem-badge{font-size:11px;color:var(--sky-lt);opacity:.8;}
+.gitem-comment{
+  font-size:13.5px;line-height:1.7;color:rgba(255,255,255,.72);
+  padding:10px 14px;
+  background:rgba(255,255,255,.04);border-radius:10px;
+  border-right:3px solid var(--aqua);
+}
+.gitem-date{font-size:11px;color:rgba(255,255,255,.3);margin-top:10px;}
 
-/* placeholder for empty gallery */
+/* placeholder */
 .gallery-empty{
   background:var(--glass);border:1px solid var(--glass-b);border-radius:18px;
   padding:50px;text-align:center;color:rgba(255,255,255,.3);
@@ -137,19 +155,29 @@ header{position:sticky;top:0;z-index:200;backdrop-filter:blur(22px);background:r
 .gallery-empty p{font-size:14px;}
 
 /* ══════════════════════════════════
-   REVIEWS — 4 cards + modal
+   REVIEWS — 3 بطاقات متساوية فقط
 ══════════════════════════════════ */
 .reviews{padding:60px 0;position:relative;z-index:1;}
-.rgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;}
-.rcard{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:18px;padding:20px;transition:all .3s;}
-.rcard:hover{border-color:rgba(58,140,232,.22);transform:translateY(-2px);}
-.rtop{display:flex;align-items:center;gap:11px;margin-bottom:12px;}
-.ava{width:42px;height:42px;border-radius:50%;flex-shrink:0;background:linear-gradient(135deg,var(--royal-mid),var(--aqua));display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:700;}
-.rname{font-size:14px;font-weight:700;margin-bottom:2px;}
+/* 3 columns fixed = 3 cards perfectly aligned */
+.rgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+.rcard{
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);
+  border-radius:20px;padding:24px;transition:all .3s;
+  display:flex;flex-direction:column;
+}
+.rcard:hover{border-color:rgba(58,140,232,.25);transform:translateY(-3px);}
+.rtop{display:flex;align-items:center;gap:11px;margin-bottom:14px;}
+.ava{
+  width:46px;height:46px;border-radius:50%;flex-shrink:0;
+  background:linear-gradient(135deg,var(--royal-mid),var(--aqua));
+  display:flex;align-items:center;justify-content:center;
+  font-size:18px;font-weight:800;
+}
+.rname{font-size:14.5px;font-weight:800;margin-bottom:2px;}
 .rentity{font-size:11px;color:var(--sky-lt);opacity:.8;}
-.rstars{display:flex;gap:2px;margin-bottom:10px;font-size:14px;color:var(--warn);}
-.rtext{font-size:13px;line-height:1.75;color:rgba(255,255,255,.72);}
-.rmeta{margin-top:11px;font-size:11px;color:rgba(255,255,255,.28);display:flex;align-items:center;gap:5px;}
+.rstars{display:flex;gap:2px;margin-bottom:12px;font-size:16px;color:var(--warn);}
+.rtext{font-size:13.5px;line-height:1.8;color:rgba(255,255,255,.72);flex:1;}
+.rmeta{margin-top:14px;font-size:11px;color:rgba(255,255,255,.28);display:flex;align-items:center;gap:5px;}
 .vbadge{display:inline-flex;align-items:center;gap:3px;background:rgba(0,232,122,.1);border:1px solid rgba(0,232,122,.2);border-radius:20px;padding:2px 8px;font-size:10.5px;color:var(--success);margin-right:auto;}
 
 /* ══════════════════════════════════
@@ -209,6 +237,9 @@ footer{border-top:1px solid rgba(255,255,255,.06);padding:24px 0;text-align:cent
 .flogo{font-size:17px;font-weight:900;background:linear-gradient(135deg,#fff,var(--aqua-lt));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:5px;}
 .ftag{font-size:11.5px;color:rgba(255,255,255,.27);}
 
+@media(max-width:900px){
+  .rgrid{grid-template-columns:repeat(2,1fr);}
+}
 @media(max-width:768px){
   .sgrid{grid-template-columns:repeat(2,1fr);gap:9px;}
   .scard{padding:18px 10px;}.scard .num{font-size:28px;}
@@ -465,7 +496,7 @@ footer{border-top:1px solid rgba(255,255,255,.06);padding:24px 0;text-align:cent
 <script>
 'use strict';
 
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbyZpW9TmxXwrJmbnUgX2XdYZUPjOxm2EJ8K3ddZOx4yc0myYFT_onuKj29g9M6Vggut/exec';
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbxNw6_o__GyK1i6Wf54ozDACtzDACDJTjKAlbVmrX91VoLxSZIGVhJ0LE-0Ml5jn76k/exec';
 
 // ── Drops ──
 (function(){
@@ -563,15 +594,27 @@ function reviewCard(rv){
   </div>`;
 }
 
-// ✅ بطاقة صورة التوثيق — عمودية مثل Google Maps
-function galleryItem(url, ts){
+// بطاقة صورة التوثيق — اسم المورد + تعليق + صورة
+function galleryItem(item){
+  const url     = typeof item === 'string' ? item : (item.img||'');
+  const name    = typeof item === 'string' ? 'مورد' : (item.name||'مورد');
+  const comment = typeof item === 'string' ? '' : (item.comment||'');
+  const ts      = typeof item === 'string' ? '' : (item.ts||'');
+  const initial = name.charAt(0);
   return `<div class="gitem fi">
     <img src="${esc(url)}" loading="lazy"
       onerror="this.parentElement.style.display='none'"
-      alt="توثيق توصيل">
-    <div class="gitem-info">
-      <span class="gi-label">📸 توثيق ميداني</span>
-      <span class="gi-date">${esc(ts||'')}</span>
+      alt="توثيق توصيل" style="max-height:420px;min-height:220px;object-fit:cover;">
+    <div class="gitem-body">
+      <div class="gitem-driver">
+        <div class="gitem-avatar">${esc(initial)}</div>
+        <div>
+          <div class="gitem-name">📸 ${esc(name)}</div>
+          <div class="gitem-badge">مورد موثَّق ✓</div>
+        </div>
+      </div>
+      ${comment ? `<div class="gitem-comment">${esc(comment)}</div>` : ''}
+      ${ts ? `<div class="gitem-date">🕐 ${esc(ts)}</div>` : ''}
     </div>
   </div>`;
 }
@@ -609,18 +652,26 @@ async function loadPublicData(){
       mg.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:40px;color:rgba(255,255,255,.3)">لا توجد بيانات بعد</div>';
     }
 
-    // ── Gallery: show last 3 vertically ──
-    // ✅ images مصفوفة منفصلة من الـ backend
-    _allImages = d.images||[];
+    // ── Gallery: show last 3, pass full objects ──
+    _allImages = d.images||[];  // array of {img, name, comment, ts} من backend
     const gf=document.getElementById('galleryFeed');
     if(_allImages.length){
       const show=_allImages.slice(0,3);
-      gf.innerHTML=show.map(url=>galleryItem(url,'')).join('');
-      // modal — كل الصور
+      gf.innerHTML=show.map(item=>galleryItem(item)).join('');
+      // modal
       document.getElementById('galleryModalGrid').innerHTML=
-        _allImages.map(url=>`<div style="border-radius:12px;overflow:hidden;background:var(--glass);">
-          <img src="${esc(url)}" loading="lazy" style="width:100%;display:block;border-radius:12px" onerror="this.parentElement.style.display='none'">
-        </div>`).join('');
+        _allImages.map(item=>{
+          const url=typeof item==='string'?item:(item.img||'');
+          const nm=typeof item==='string'?'مورد':(item.name||'مورد');
+          const cm=typeof item==='string'?'':(item.comment||'');
+          return `<div style="border-radius:14px;overflow:hidden;background:var(--glass);border:1px solid var(--glass-b);">
+            <img src="${esc(url)}" loading="lazy" style="width:100%;display:block;max-height:220px;object-fit:cover" onerror="this.parentElement.style.display='none'">
+            <div style="padding:10px 12px">
+              <div style="font-size:12.5px;font-weight:700">📸 ${esc(nm)}</div>
+              ${cm?`<div style="font-size:11.5px;color:rgba(255,255,255,.55);margin-top:4px">${esc(cm)}</div>`:''}
+            </div>
+          </div>`;
+        }).join('');
       if(_allImages.length>3){
         document.getElementById('gallerySeeAll').style.display='inline-flex';
       }
@@ -628,16 +679,14 @@ async function loadPublicData(){
       gf.innerHTML=`<div class="gallery-empty"><div class="ge-icon">📸</div><p>لا توجد صور توثيق بعد</p></div>`;
     }
 
-    // ── Reviews: show last 4, Customer only ──
-    // ✅ backend يرسل reviews للعملاء فقط
+    // ── Reviews: show 3 only, Customer only ──
     _allReviews = (d.reviews||[]).filter(rv=>rv.stars>0);
     const rg=document.getElementById('reviewsGrid');
     if(_allReviews.length){
-      const show=_allReviews.slice(0,4);
+      const show=_allReviews.slice(0,3);  // 3 فقط للعرض الرئيسي
       rg.innerHTML=show.map(reviewCard).join('');
-      // modal
       document.getElementById('reviewsModalGrid').innerHTML=_allReviews.map(reviewCard).join('');
-      if(_allReviews.length>4){
+      if(_allReviews.length>3){
         document.getElementById('reviewsSeeAll').style.display='inline-flex';
       }
     } else {
