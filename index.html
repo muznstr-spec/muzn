@@ -656,7 +656,7 @@ async function loadPublicData(){
     _allImages = d.images||[];  // array of {img, name, comment, ts} من backend
     const gf=document.getElementById('galleryFeed');
     if(_allImages.length){
-      const show=_allImages.slice(0,3);
+      const show=_allImages.slice(0,2);
       gf.innerHTML=show.map(item=>galleryItem(item)).join('');
       // modal
       document.getElementById('galleryModalGrid').innerHTML=
@@ -672,7 +672,7 @@ async function loadPublicData(){
             </div>
           </div>`;
         }).join('');
-      if(_allImages.length>3){
+      if(_allImages.length>2){
         document.getElementById('gallerySeeAll').style.display='inline-flex';
       }
     } else {
