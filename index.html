@@ -111,48 +111,72 @@ header{position:sticky;top:0;z-index:200;backdrop-filter:blur(22px);background:r
 .modal-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;}
 
 /* ══════════════════════════════════
-   GALLERY — بطاقات عمودية واضحة
+   GALLERY — بطاقات جنب بعض مثل Google Maps
 ══════════════════════════════════ */
 .gallery{padding:60px 0;position:relative;z-index:1;}
-.gallery-feed{display:flex;flex-direction:column;gap:20px;}
+.gallery-feed{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;}
 .gitem{
   border-radius:20px;overflow:hidden;
   background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);
   transition:transform .3s,border-color .3s;
+  display:flex;flex-direction:column;
 }
 .gitem:hover{transform:translateY(-3px);border-color:rgba(58,140,232,.3);}
-.gitem img{
-  width:100%;display:block;object-fit:cover;
-  max-height:420px;min-height:220px;
-  background:var(--royal-deep);
-}
-.gitem-body{padding:18px 20px;}
-.gitem-driver{
-  display:flex;align-items:center;gap:10px;margin-bottom:10px;
-}
+
+/* معلومات المورد فوق الصورة */
+.gitem-body{padding:16px 18px 12px;}
+.gitem-driver{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
 .gitem-avatar{
-  width:38px;height:38px;border-radius:50%;flex-shrink:0;
+  width:40px;height:40px;border-radius:50%;flex-shrink:0;
   background:linear-gradient(135deg,var(--royal-mid),var(--aqua));
   display:flex;align-items:center;justify-content:center;
   font-size:16px;font-weight:800;
 }
-.gitem-name{font-size:14px;font-weight:700;color:#fff;}
-.gitem-badge{font-size:11px;color:var(--sky-lt);opacity:.8;}
+.gitem-name{font-size:14px;font-weight:700;color:#fff;line-height:1.2;}
+.gitem-badge{font-size:11px;color:var(--sky-lt);opacity:.8;margin-top:1px;}
+.gitem-date{font-size:11px;color:rgba(255,255,255,.35);margin-bottom:8px;padding-right:50px;}
 .gitem-comment{
-  font-size:13.5px;line-height:1.7;color:rgba(255,255,255,.72);
-  padding:10px 14px;
+  font-size:13px;line-height:1.65;color:rgba(255,255,255,.7);
+  padding:8px 12px;margin-bottom:0;
   background:rgba(255,255,255,.04);border-radius:10px;
   border-right:3px solid var(--aqua);
 }
-.gitem-date{font-size:11px;color:rgba(255,255,255,.3);margin-top:10px;}
+
+/* الصورة تحت البيانات — تملأ العرض بدون padding */
+.gitem-img-wrap{
+  flex:1;overflow:hidden;cursor:pointer;
+  border-top:1px solid rgba(255,255,255,.06);
+  margin-top:12px;
+}
+.gitem-img-wrap img{
+  width:100%;display:block;
+  object-fit:cover;
+  height:220px;
+  transition:transform .4s;
+}
+.gitem-img-wrap:hover img{transform:scale(1.03);}
+
+/* Lightbox */
+.lightbox{
+  position:fixed;inset:0;background:rgba(0,0,0,.92);
+  z-index:600;display:none;align-items:center;justify-content:center;
+  padding:20px;cursor:zoom-out;
+}
+.lightbox.open{display:flex;}
+.lightbox img{max-width:100%;max-height:90vh;object-fit:contain;border-radius:12px;}
 
 /* placeholder */
 .gallery-empty{
   background:var(--glass);border:1px solid var(--glass-b);border-radius:18px;
   padding:50px;text-align:center;color:rgba(255,255,255,.3);
+  grid-column:1/-1;
 }
 .gallery-empty .ge-icon{font-size:40px;margin-bottom:12px;}
 .gallery-empty p{font-size:14px;}
+
+@media(max-width:640px){
+  .gallery-feed{grid-template-columns:1fr;}
+}
 
 /* ══════════════════════════════════
    REVIEWS — 3 بطاقات متساوية فقط
@@ -493,6 +517,11 @@ footer{border-top:1px solid rgba(255,255,255,.06);padding:24px 0;text-align:cent
 
 <div class="toast" id="toast"></div>
 
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" onclick="this.classList.remove('open')">
+  <img id="lightboxImg" src="" alt="صورة التوثيق">
+</div>
+
 <script>
 'use strict';
 
@@ -530,6 +559,10 @@ function countTo(id,target){
   })(start);
 }
 function goTo(id){const el=document.getElementById(id);if(el)el.scrollIntoView({behavior:'smooth'});}
+function openLightbox(url){
+  document.getElementById('lightboxImg').src=url;
+  document.getElementById('lightbox').classList.add('open');
+}
 
 // ── Modal ──
 function openModal(id){document.getElementById(id).classList.add('open');}
@@ -594,7 +627,7 @@ function reviewCard(rv){
   </div>`;
 }
 
-// بطاقة صورة التوثيق — المعلومات فوق + صورة كاملة بدون قص
+// بطاقة توثيق — Google Maps style
 function galleryItem(item){
   const url     = typeof item === 'string' ? item : (item.img||'');
   const name    = typeof item === 'string' ? 'مورد' : (item.name||'مورد');
@@ -606,18 +639,17 @@ function galleryItem(item){
       <div class="gitem-driver">
         <div class="gitem-avatar">${esc(initial)}</div>
         <div>
-          <div class="gitem-name">📸 ${esc(name)}</div>
+          <div class="gitem-name">${esc(name)}</div>
           <div class="gitem-badge">مورد موثَّق ✓</div>
         </div>
       </div>
-      ${comment ? `<div class="gitem-comment">${esc(comment)}</div>` : ''}
       ${ts ? `<div class="gitem-date">🕐 ${esc(ts)}</div>` : ''}
+      ${comment ? `<div class="gitem-comment">${esc(comment)}</div>` : ''}
     </div>
-    <div style="width:100%;background:#000;border-radius:0 0 20px 20px;overflow:hidden;max-height:480px;display:flex;align-items:center;justify-content:center;">
+    <div class="gitem-img-wrap" onclick="openLightbox('${esc(url)}')">
       <img src="${esc(url)}" loading="lazy"
         onerror="this.parentElement.parentElement.style.display='none'"
-        alt="توثيق توصيل"
-        style="width:100%;height:auto;max-height:480px;object-fit:contain;display:block;">
+        alt="توثيق توصيل">
     </div>
   </div>`;
 }
