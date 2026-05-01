@@ -613,10 +613,12 @@ function galleryItem(item){
       ${comment ? `<div class="gitem-comment">${esc(comment)}</div>` : ''}
       ${ts ? `<div class="gitem-date">🕐 ${esc(ts)}</div>` : ''}
     </div>
-    <img src="${esc(url)}" loading="lazy"
-      onerror="this.parentElement.style.display='none'"
-      alt="توثيق توصيل"
-      style="width:100%;display:block;object-fit:contain;background:#000;max-height:none;height:auto;">
+    <div style="width:100%;background:#000;border-radius:0 0 20px 20px;overflow:hidden;max-height:480px;display:flex;align-items:center;justify-content:center;">
+      <img src="${esc(url)}" loading="lazy"
+        onerror="this.parentElement.parentElement.style.display='none'"
+        alt="توثيق توصيل"
+        style="width:100%;height:auto;max-height:480px;object-fit:contain;display:block;">
+    </div>
   </div>`;
 }
 
