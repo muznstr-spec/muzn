@@ -594,7 +594,7 @@ function reviewCard(rv){
   </div>`;
 }
 
-// بطاقة صورة التوثيق — اسم المورد + تعليق + صورة
+// بطاقة صورة التوثيق — المعلومات فوق + صورة كاملة بدون قص
 function galleryItem(item){
   const url     = typeof item === 'string' ? item : (item.img||'');
   const name    = typeof item === 'string' ? 'مورد' : (item.name||'مورد');
@@ -602,9 +602,6 @@ function galleryItem(item){
   const ts      = typeof item === 'string' ? '' : (item.ts||'');
   const initial = name.charAt(0);
   return `<div class="gitem fi">
-    <img src="${esc(url)}" loading="lazy"
-      onerror="this.parentElement.style.display='none'"
-      alt="توثيق توصيل" style="max-height:420px;min-height:220px;object-fit:cover;">
     <div class="gitem-body">
       <div class="gitem-driver">
         <div class="gitem-avatar">${esc(initial)}</div>
@@ -616,6 +613,10 @@ function galleryItem(item){
       ${comment ? `<div class="gitem-comment">${esc(comment)}</div>` : ''}
       ${ts ? `<div class="gitem-date">🕐 ${esc(ts)}</div>` : ''}
     </div>
+    <img src="${esc(url)}" loading="lazy"
+      onerror="this.parentElement.style.display='none'"
+      alt="توثيق توصيل"
+      style="width:100%;display:block;object-fit:contain;background:#000;max-height:none;height:auto;">
   </div>`;
 }
 
