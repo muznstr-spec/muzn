@@ -672,7 +672,7 @@ async function loadPublicData(){
     countTo('sBoxes',d.stats.boxes||0);
     countTo('sBottles',d.stats.bottles||0);
     document.getElementById('sRating').textContent=
-      (d.stats.rating||0)>0?d.stats.rating.toFixed(1)+' ★':'—';
+      (d.stats.rating||0)>0?d.stats.rating.toFixed(1):'—';
 
     // ── Mosques: show last 4 ──
     _allMosques = d.mosques||[];
