@@ -292,22 +292,44 @@ body{
 /* ── DIVIDER ── */
 .div{height:1px;background:linear-gradient(90deg,transparent,rgba(58,140,232,.15),transparent);margin:4px 0 26px;}
 
-/* ── MOSQUE HEADER (imam view) ── */
+/* ── MOSQUE HEADER (imam view) — redesigned ── */
 .mosque-hdr{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:14px;margin-bottom:24px;
+}
+.mh-card{
+  background:var(--glass);border:1px solid var(--glass-b);
+  border-radius:18px;padding:20px 22px;
+  transition:border-color .25s;
+}
+.mh-card:hover{border-color:rgba(58,140,232,.28);}
+.mh-card-icon{font-size:22px;margin-bottom:8px;}
+.mh-card-label{font-size:11px;color:var(--text-dimmer);font-weight:500;margin-bottom:4px;text-transform:uppercase;letter-spacing:.5px;}
+.mh-card-value{font-size:18px;font-weight:800;color:var(--text);}
+.mh-card-sub{font-size:11.5px;color:var(--text-dim);margin-top:3px;}
+.mh-card.highlight{
   background:linear-gradient(135deg,rgba(30,86,208,.2),rgba(0,184,240,.06));
-  border:1px solid rgba(58,140,232,.18);border-radius:22px;
-  padding:24px 28px;margin-bottom:24px;
-  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;
+  border-color:rgba(58,140,232,.25);
 }
-.mosque-hdr-info h2{font-size:22px;font-weight:900;margin-bottom:4px;}
-.mosque-hdr-info p{font-size:13px;color:var(--text-dim);}
-.mosque-hdr-global{display:flex;gap:14px;flex-wrap:wrap;}
-.global-chip{
-  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);
-  border-radius:12px;padding:10px 16px;text-align:center;min-width:110px;
+.mh-card.highlight .mh-card-value{
+  font-size:26px;
+  background:linear-gradient(135deg,#fff,var(--aqua-lt));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
 }
-.global-chip .gc-val{font-size:20px;font-weight:800;color:var(--aqua-lt);}
-.global-chip .gc-lbl{font-size:10.5px;color:var(--text-dimmer);margin-top:2px;}
+
+/* ── RATINGS BARS (Google Maps style) ── */
+.ratings-bars{display:flex;flex-direction:column;gap:8px;}
+.rb-row{display:flex;align-items:center;gap:10px;}
+.rb-star{font-size:12px;color:var(--gold);width:32px;flex-shrink:0;font-weight:700;}
+.rb-track{flex:1;height:8px;background:rgba(255,255,255,.07);border-radius:10px;overflow:hidden;}
+.rb-fill{height:100%;border-radius:10px;background:linear-gradient(90deg,var(--gold),var(--gold-lt));transition:width 1.2s cubic-bezier(.34,1.2,.64,1);}
+.rb-count{font-size:12px;color:var(--text-dimmer);width:24px;text-align:left;flex-shrink:0;}
+
+/* ── DAY/MONTH charts container ── */
+.charts-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:26px;}
+@media(max-width:1100px){.charts-3{grid-template-columns:1fr 1fr;}}
+@media(max-width:768px){.charts-3{grid-template-columns:1fr;}}
 
 
 /* ── LOGIN PAGE ── */
@@ -452,7 +474,6 @@ body{
       <div id="imamNav" style="display:none">
         <div class="nav-lbl">مسجدي</div>
         <button class="nav-item active" onclick="showPage('imamOverview')"><span class="nav-icon">📊</span> نظرة عامة</button>
-        <button class="nav-item" onclick="showPage('imamDeliveries')"><span class="nav-icon">🚚</span> التوصيلات</button>
         <button class="nav-item" onclick="showPage('imamReviews')"><span class="nav-icon">⭐</span> تقييماتي</button>
         <button class="nav-item" onclick="showPage('imamGallery')"><span class="nav-icon">📸</span> صور التوثيق</button>
       </div>
@@ -495,14 +516,28 @@ body{
         <div class="kpi"><span class="kpi-icon">💬</span><div class="kpi-val sk" style="width:60px;height:38px"></div><div class="kpi-lbl">عدد التقييمات</div></div>
       </div>
 
-      <div class="charts-grid">
+      <div class="charts-grid" style="margin-bottom:16px">
         <div class="chart-card">
           <div class="chart-title">⭐ توزيع التقييمات</div>
-          <div class="chart-wrap"><canvas id="ratingsChart"></canvas></div>
+          <div class="ratings-bars" id="adminRatingsBars" style="margin-top:8px"></div>
         </div>
         <div class="chart-card">
           <div class="chart-title">🌆 الكراتين حسب المدينة</div>
           <div class="chart-wrap"><canvas id="citiesChart"></canvas></div>
+        </div>
+      </div>
+      <div class="charts-3" style="margin-bottom:26px">
+        <div class="chart-card">
+          <div class="chart-title">📆 أقوى أيام الأسبوع</div>
+          <div class="chart-wrap"><canvas id="adminWeekdayChart"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-title">📈 المساهمة الشهرية</div>
+          <div class="chart-wrap"><canvas id="adminMonthlyChart"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-title">🏘️ أقوى الأحياء مساهمة</div>
+          <div class="chart-wrap"><canvas id="districtsChart"></canvas></div>
         </div>
       </div>
 
@@ -574,14 +609,30 @@ body{
         <div class="kpi"><span class="kpi-icon">🚚</span><div class="kpi-val sk" style="width:60px;height:38px"></div><div class="kpi-lbl">عدد التوصيلات</div></div>
       </div>
 
-      <div class="charts-grid">
+      <!-- Charts row 1: line + ratings bars -->
+      <div class="charts-grid" style="margin-bottom:16px">
         <div class="chart-card">
-          <div class="chart-title">📅 التوصيلات (آخر 7 أيام)</div>
+          <div class="chart-title">📅 التوصيلات — آخر 7 أيام</div>
           <div class="chart-wrap"><canvas id="deliveriesChart"></canvas></div>
         </div>
         <div class="chart-card">
-          <div class="chart-title">⭐ توزيع تقييماتك</div>
-          <div class="chart-wrap"><canvas id="imamRatingsChart"></canvas></div>
+          <div class="chart-title">⭐ توزيع التقييمات</div>
+          <div class="ratings-bars" id="imamRatingsBars" style="margin-top:8px"></div>
+        </div>
+      </div>
+      <!-- Charts row 2: weekday + monthly -->
+      <div class="charts-3">
+        <div class="chart-card">
+          <div class="chart-title">📆 أقوى أيام الأسبوع تبرعاً</div>
+          <div class="chart-wrap"><canvas id="weekdayChart"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-title">📈 المساهمة الشهرية</div>
+          <div class="chart-wrap"><canvas id="monthlyChart"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-title">📦 الكراتين الشهرية</div>
+          <div class="chart-wrap"><canvas id="boxesMonthlyChart"></canvas></div>
         </div>
       </div>
     </div>
@@ -694,7 +745,15 @@ const chartDefaults = {
   plugins:{ legend:{ display:false }, tooltip:{ rtl:true, bodyFont:{family:'Tajawal'}, titleFont:{family:'Tajawal'} } },
   scales:{
     x:{ ticks:{ color:'rgba(255,255,255,.45)', font:{family:'Tajawal',size:11} }, grid:{ color:'rgba(255,255,255,.05)' } },
-    y:{ ticks:{ color:'rgba(255,255,255,.45)', font:{family:'Tajawal',size:11} }, grid:{ color:'rgba(255,255,255,.05)' } }
+    y:{
+      ticks:{
+        color:'rgba(255,255,255,.45)', font:{family:'Tajawal',size:11},
+        // أرقام صحيحة فقط — بدون decimals
+        callback: v => Number.isInteger(v) ? v.toLocaleString('ar-SA') : null,
+        stepSize:1
+      },
+      grid:{ color:'rgba(255,255,255,.05)' }
+    }
   }
 };
 
@@ -724,6 +783,25 @@ function makeLineChart(id, labels, values){
     }] },
     options:{ ...chartDefaults, maintainAspectRatio:false }
   });
+}
+
+// Google Maps style ratings bars
+function makeRatingsBars(containerId, ratingsDist){
+  const el = document.getElementById(containerId);
+  if(!el) return;
+  const total = ratingsDist.reduce((s,r)=>s+(r.count||0),0)||1;
+  const sorted = [5,4,3,2,1].map(s=>{
+    const found = ratingsDist.find(r=>r.stars===s)||{stars:s,count:0};
+    return found;
+  });
+  el.innerHTML = sorted.map(r=>`
+    <div class="rb-row">
+      <div class="rb-star">${r.stars} ★</div>
+      <div class="rb-track">
+        <div class="rb-fill" style="width:${((r.count||0)/total*100).toFixed(1)}%"></div>
+      </div>
+      <div class="rb-count">${r.count||0}</div>
+    </div>`).join('');
 }
 
 function makeDoughnutChart(id, labels, values){
@@ -774,12 +852,25 @@ function renderAdmin(d){
 
   // Charts
   const rd = d.charts?.ratingsDist||[];
-  makeDoughnutChart('ratingsChart',
-    rd.map(r=>`${r.stars} ★`), rd.map(r=>r.count));
+  makeRatingsBars('adminRatingsBars', rd);
 
   const bc = d.charts?.boxesByCity||[];
   makeBarChart('citiesChart', bc.map(c=>c.city), bc.map(c=>c.boxes),
     ['rgba(30,86,208,.7)','rgba(0,184,240,.7)','rgba(0,232,122,.7)','rgba(240,180,41,.7)','rgba(255,82,82,.7)']);
+
+  // Weekday chart (admin)
+  const wd = d.charts?.byWeekday||[0,0,0,0,0,0,0];
+  makeBarChart('adminWeekdayChart',
+    ['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'],
+    wd, '#2a6ae8');
+
+  // Monthly line (admin)
+  const mo = d.charts?.byMonth||[];
+  makeLineChart('adminMonthlyChart', mo.map(x=>x.month), mo.map(x=>x.count));
+
+  // Districts bar (admin)
+  const dr = d.charts?.byDistrict||[];
+  makeBarChart('districtsChart', dr.map(x=>x.district), dr.map(x=>x.boxes), '#00e87a');
 
   // Top mosques bars
   const topMax = (d.topMosques||[])[0]?.boxes||1;
@@ -846,50 +937,79 @@ function renderAdmin(d){
 //  RENDER — IMAM
 // ════════════════════════════════════════════
 function renderImam(d){
-  const s  = d.stats||{};
-  const gs = d.globalStats||{};
-  const m  = d.mosque||{};
+  const s = d.stats||{};
+  const m = d.mosque||{};
 
-  // Mosque header
-  document.getElementById('mosqueHdr').style.display='flex';
-  document.getElementById('imamMosqueName').textContent = m.name||'—';
-  document.getElementById('imamMosqueLocation').textContent = `📍 ${m.district||''} · ${m.city||''} · ${m.imamName?'الإمام: '+m.imamName:''}`;
-
-  document.getElementById('globalChips').innerHTML = `
-    <div class="global-chip"><div class="gc-val">${gs.totalBoxes?.toLocaleString('ar-SA')||'—'}</div><div class="gc-lbl">إجمالي مزن (كراتين)</div></div>
-    <div class="global-chip"><div class="gc-val">${gs.totalMosques||'—'}</div><div class="gc-lbl">مساجد تخدمها مزن</div></div>
-    <div class="global-chip"><div class="gc-val">${gs.totalBottles?.toLocaleString('ar-SA')||'—'}</div><div class="gc-lbl">إجمالي العبوات</div></div>
+  // ── Mosque header — 3 info cards ──
+  const hdr = document.getElementById('mosqueHdr');
+  hdr.style.display = 'grid';
+  hdr.innerHTML = `
+    <div class="mh-card highlight">
+      <div class="mh-card-icon">🕌</div>
+      <div class="mh-card-label">المسجد</div>
+      <div class="mh-card-value">${esc(m.name||'—')}</div>
+      <div class="mh-card-sub">📍 ${esc(m.district||'')} · ${esc(m.city||'')}</div>
+    </div>
+    <div class="mh-card">
+      <div class="mh-card-icon">👤</div>
+      <div class="mh-card-label">الإمام</div>
+      <div class="mh-card-value">${esc(m.imamName||'—')}</div>
+      <div class="mh-card-sub">${esc(m.imamPhone||'')}</div>
+    </div>
+    <div class="mh-card">
+      <div class="mh-card-icon">🕐</div>
+      <div class="mh-card-label">آخر توصيل</div>
+      <div class="mh-card-value" style="font-size:15px">${esc(s.lastDelivery||'لا يوجد بعد')}</div>
+      <div class="mh-card-sub">🚚 ${s.deliveries||0} توصيلة إجمالاً</div>
+    </div>
   `;
 
-  // KPIs
+  // ── KPIs ──
   const ki = document.getElementById('imamKpis');
   ki.innerHTML = `
     <div class="kpi"><span class="kpi-icon">📦</span><div class="kpi-val" id="ik1">0</div><div class="kpi-lbl">الكراتين الموزعة</div><div class="kpi-sub">💧 <b>${(s.bottles||0).toLocaleString('ar-SA')}</b> عبوة</div></div>
     <div class="kpi"><span class="kpi-icon">⭐</span><div class="kpi-val" id="ik2">—</div><div class="kpi-lbl">متوسط تقييمك</div><div class="kpi-sub">من <b>${s.reviewsCount||0}</b> تقييم</div></div>
     <div class="kpi"><span class="kpi-icon">🚚</span><div class="kpi-val" id="ik3">0</div><div class="kpi-lbl">عدد التوصيلات</div></div>
-    <div class="kpi"><span class="kpi-icon">🕐</span><div class="kpi-val" style="font-size:14px;margin-top:4px">${esc(s.lastDelivery||'—')}</div><div class="kpi-lbl">آخر توصيل</div></div>
+    <div class="kpi"><span class="kpi-icon">💬</span><div class="kpi-val" id="ik4">0</div><div class="kpi-lbl">عدد التقييمات</div></div>
   `;
   countTo(document.getElementById('ik1'), s.boxes);
   document.getElementById('ik2').textContent = s.avgRating>0 ? s.avgRating.toFixed(1)+' ★':'—';
   countTo(document.getElementById('ik3'), s.deliveries);
+  countTo(document.getElementById('ik4'), s.reviewsCount);
 
-  // Charts
+  // ── Chart 1: deliveries by day ──
   const dd = d.charts?.deliveriesByDay||[];
   makeLineChart('deliveriesChart', dd.map(x=>x.date), dd.map(x=>x.count));
 
+  // ── Chart 2: ratings bars (Google Maps style) ──
   const rd = d.charts?.ratingsDist||[];
-  makeBarChart('imamRatingsChart', rd.map(r=>`${r.stars}★`), rd.map(r=>r.count), '#00b8f0');
+  makeRatingsBars('imamRatingsBars', rd);
 
-  // Gallery (deliveries)
+  // ── Chart 3: weekday ──
+  const wd = d.charts?.byWeekday||buildFakeWeekday(dd);
+  makeBarChart('weekdayChart',
+    ['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'],
+    wd, '#2a6ae8');
+
+  // ── Chart 4: monthly line ──
+  const mo = d.charts?.byMonth||[];
+  makeLineChart('monthlyChart', mo.map(x=>x.month), mo.map(x=>x.count));
+
+  // ── Chart 5: boxes monthly ──
+  makeBarChart('boxesMonthlyChart', mo.map(x=>x.month), mo.map(x=>x.boxes||0), '#00b8f0');
+
+  // ── Gallery + Reviews ──
   const imgHtml = buildGalleryHtml(d.images||[]);
   document.getElementById('imamGalleryGrid').innerHTML = imgHtml;
   document.getElementById('imamFullGallery').innerHTML = imgHtml;
-
-  // Deliveries page (same as gallery)
-  document.getElementById('imamDeliveries') && (document.getElementById('imamDeliveries').innerHTML = `<div class="ggrid">${imgHtml}</div>`);
-
-  // Reviews
   document.getElementById('imamReviewsGrid').innerHTML = buildReviewsHtml(d.reviews||[]);
+}
+
+// build weekday array from deliveries data (fallback)
+function buildFakeWeekday(dd){
+  const counts = [0,0,0,0,0,0,0];
+  dd.forEach(x=>{ if(x.date){ const day=new Date(x.date).getDay(); counts[day]+=x.count||0; }});
+  return counts;
 }
 
 // ════════════════════════════════════════════
